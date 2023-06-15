@@ -15,6 +15,10 @@ module.exports = {
         "primary-dark": "#01080E",
 
         "secondary-grey": "#607B96",
+        "secondary-blue": "#4D5BCE",
+
+        "accent-green": "#43D9AD",
+        "accent-nude": "#E99287",
 
         lines: "#1E2D3D",
       },

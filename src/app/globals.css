@@ -16,9 +16,10 @@
   }
 } */
 
-body {
-  background: "#011627";
-  height: 100vh;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
@@ -43,4 +44,27 @@ a {
 
 h5 {
   font-size: 14px;
+}
+
+code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+code .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 2.5rem;
+  margin-right: 1rem;
+  display: inline-block;
+  text-align: right;
+  color: #8f8ca8;
+}
+
+#shiki-code > pre {
+  background-color: #011627 !important;
+}
+
+#shiki-code > pre span {
+  font-size: 14px !important;
 }

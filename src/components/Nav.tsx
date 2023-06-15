@@ -3,16 +3,14 @@ import Link from "./Link";
 
 export default function Nav() {
   return (
-    <header className="h-14">
-      <nav className="w-full bg-primary text-secondary-grey flex border-collapse border border-lines">
-        <div className="p-4 w-64">
-          <label>Edison Cristovao</label>
-        </div>
+    <nav className="flex items-center w-full h-14 bg-primary text-secondary-grey border-collapse border border-lines">
+      <div className="w-64 pl-6">
+        <label>Edison Cristovao</label>
+      </div>
 
-        <Link label="_home"></Link>
-        <Link label="_about-me"></Link>
-        <Link label="_projects"></Link>
-      </nav>
-    </header>
+      <Link label="_home" href={"/"}></Link>
+      <Link label="_about-me" href={"/editor"}></Link>
+      <Link label="_projects" href={"projects"}></Link>
+    </nav>
   );
 }
