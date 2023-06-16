@@ -21,7 +21,7 @@ export default async function Layout({
   return (
     <div className="flex ml-[2px] grow text-secondary-grey">
       <div className="w-16 border-r border-lines h-full flex flex-col items-center">
-        <Link href={""}>
+        <Link href={"/editor"}>
           <Files className="mb-7  mt-5 hover:text-white" />
         </Link>
 
@@ -41,24 +41,16 @@ export default async function Layout({
           </File>
         </Folder>
         <Folder title="Terminal">
-          <File href="/terminal/general">
+          <File href="/editor/terminal">
             <Terminal size={16} />
             General
-          </File>
-          <File href="/terminal/fish">
-            <Cog size={16} />
-            config.fish
           </File>
         </Folder>
 
         <Folder title="Others">
-          <File href="/others/dev-setup">
+          <File href="/editor/others">
             <Cpu size={16} />
             dev.setup
-          </File>
-          <File href="/others/gaming-setup">
-            <Joystick size={16} />
-            gaming.setup
           </File>
         </Folder>
       </div>

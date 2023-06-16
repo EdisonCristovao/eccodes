@@ -1,5 +1,5 @@
 import Nav from "@/components/Nav";
-import "./globals.css";
+import "@/styles/globals.css";
 import { Fira_Code } from "next/font/google";
 import Footer from "@/components/Footer";
 
