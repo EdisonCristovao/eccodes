@@ -1,23 +1,30 @@
 import React from "react";
 import shiki from "shiki";
-import CodePreview from "@/components/CodePreview";
-
-const content = `
-export default function Link({ label, href }: LinkProps) {
-  return (
-    <div className="flex items-center px-6 h-full border-x border-lines">
-      <NextLink href={href}>
-        <label className="hover:text-white hover:cursor-pointer">{label}</label>
-      </NextLink>
-    </div>
-  );
-}`.trim();
 
 export default async function page() {
-  const highlighter = await shiki.getHighlighter({
-    theme: "dracula",
-  });
-  const code = highlighter.codeToHtml(content, { lang: "js" });
-
-  return <CodePreview code={code} />;
+  return (
+    <div className="flex justify-center items-center flex-col h-full">
+      <div className="w-1/2">
+        <h2 className="mb-4">Explore My Profile!</h2>
+        <p className="mb-4">
+          I am thrilled to invite you to explore my profile and discover the
+          world of my personal configurations. 🚀✨
+        </p>
+        <p className="mb-4">
+          On my website, you will have the opportunity to delve into the essence
+          of who I am and the unique settings I have crafted.
+        </p>
+        <p className="mb-4">
+          Feel free to navigate through the pages, explore the content, and
+          experience the essence of my personal configurations.
+        </p>
+        <p>Your feedback and thoughts are always appreciated and welcomed.</p>
+        <p className="mb-4">
+          Thank you for joining me on this exciting journey! 🌟
+        </p>
+        <p>Warm regards,</p>
+        <p>Edison Cristovao</p>
+      </div>
+    </div>
+  );
 }

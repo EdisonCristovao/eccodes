@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import {
   Files,
   User,
@@ -13,7 +13,7 @@ import {
 import { Folder } from "@/components/explorer/Folder";
 import { File } from "@/components/explorer/File";
 
-export default async function Layout({
+export default async function template({
   children,
 }: {
   children: React.ReactNode;
@@ -55,7 +55,9 @@ export default async function Layout({
         </Folder>
       </div>
       <div className="flex grow">
-        <div className="w-full border-r border-lines">{children}</div>
+        <Suspense fallback={<h1>Loading</h1>}>
+          <div className="w-full border-r border-lines">{children}</div>
+        </Suspense>
       </div>
     </div>
   );

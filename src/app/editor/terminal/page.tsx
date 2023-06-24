@@ -1,32 +1,21 @@
 import React from "react";
 import shiki from "shiki";
 import CodePreview from "@/components/CodePreview";
+import { getBlockFromNotion } from "@/lib/getBlockFromNotion";
 
-const content = `
-# General
-
-Currently I'm using the combo zsh + Oh my zsh in my terminal.
-
-Ohmyzsh Shell: https://ohmyz.sh/
-
----
-
-I'm also using Warp as my terminal emulator.
-
-Warp: https://www.warp.dev/
-
----
-
-For the theme, I chose Rosé Pine Moon variant: 
-
-Theme: https://github.com/austintraver/warp-theme/blob/main/base16_rose_pine_moon.yaml
-`.trim();
+const notionTerminalId = "3dd50dfb9ce046c3a0b87a70508980e8";
 
 export default async function page() {
+  const notionBlock = await getBlockFromNotion(notionTerminalId);
+
   const highlighter = await shiki.getHighlighter({
     theme: "dracula",
   });
-  const code = highlighter.codeToHtml(content, { lang: "md" });
+
+  const code = highlighter.codeToHtml(
+    notionBlock?.code.rich_text[0].text.content,
+    { lang: "md" }
+  );
 
   return <CodePreview code={code} />;
 }
