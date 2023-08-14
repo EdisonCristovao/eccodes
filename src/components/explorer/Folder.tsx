@@ -8,13 +8,25 @@ interface FolderProps {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
+  onClick(): void;
 }
 
-export function Folder({ title, children, defaultOpen = false }: FolderProps) {
+export function Folder({
+  title,
+  children,
+  defaultOpen = false,
+  onClick,
+}: FolderProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <Collapsible.Root open={isOpen} onOpenChange={setIsOpen}>
+    <Collapsible.Root
+      open={isOpen}
+      onOpenChange={(value) => {
+        setIsOpen(value);
+        onClick();
+      }}
+    >
       <Collapsible.Trigger className="flex items-center gap-2 px-2 py-1 w-full border border-transparent hover:text-white">
         {isOpen ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
 

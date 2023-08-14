@@ -3,6 +3,7 @@ import React from "react";
 type CodePreviewProps = {
   code: string | TrustedHTML;
 };
+
 export default function CodePreview({ code }: CodePreviewProps) {
   return (
     <div
