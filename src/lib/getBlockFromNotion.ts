@@ -1,4 +1,5 @@
 import { Client } from "@notionhq/client";
+import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { filter, find } from "lodash";
 
 export const notionClient = new Client({
@@ -11,7 +12,12 @@ export async function getBlockFromNotion(blockId: string) {
       block_id: blockId,
     });
 
-    const codeBlock = find(results, (block) => block.type === "code");
+    const codeBlock = find(results, (block) => {
+      if ("type" in block) {
+        return block.type === "code";
+      }
+      return false;
+    }) as BlockObjectResponse;
 
     return codeBlock;
   } catch (error) {
