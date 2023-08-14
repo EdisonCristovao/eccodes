@@ -2,11 +2,14 @@ import React from "react";
 import shiki from "shiki";
 import CodePreview from "@/components/CodePreview";
 import { getBlockFromNotion } from "@/lib/getBlockFromNotion";
+import { NotionBlockEc } from "@/types/NotionBlockEc";
 
 const notionTerminalId = "3dd50dfb9ce046c3a0b87a70508980e8";
 
 export default async function page() {
-  const notionBlock = await getBlockFromNotion(notionTerminalId);
+  const notionBlock = (await getBlockFromNotion(
+    notionTerminalId
+  )) as unknown as NotionBlockEc;
 
   const highlighter = await shiki.getHighlighter({
     theme: "dracula",
