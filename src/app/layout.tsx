@@ -20,10 +20,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={firaCode.className}>
         <OpenFilesProvider>
-          <div className="bg-primary min-h-screen flex justify-between flex-col">
+          <div className="bg-primary min-h-screen flex flex-col">
             <Nav />
 
-            <main className="grow flex">{children}</main>
+            <main className="md:grow flex ">{children}</main>
 
             {/* <Footer /> */}
           </div>

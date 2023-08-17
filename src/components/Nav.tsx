@@ -10,9 +10,11 @@ export default function Nav() {
         {/* <label>EC.codes</label> */}
       </div>
 
-      <Link label="_home" href={"/"}></Link>
-      <Link label="_about-me" href={"/editor"}></Link>
-      <Link label="_projects" href={"projects"}></Link>
+      <div className="md:flex h-full hidden">
+        <Link label="_home" href={"/"}></Link>
+        <Link label="_about-me" href={"/editor"}></Link>
+        <Link label="_projects" href={"projects"}></Link>
+      </div>
     </nav>
   );
 }
