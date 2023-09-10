@@ -21,6 +21,7 @@ module.exports = {
         "accent-nude": "#E99287",
 
         lines: "#1E2D3D",
+        "orange-light": "#FEA55F",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

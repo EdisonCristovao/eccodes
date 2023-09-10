@@ -41,6 +41,46 @@ export default async function page() {
               />
             </div>
           ))}
+          {_.map(projects, (project) => (
+            <div className="flex justify-center items-center">
+              <Project
+                name={project.name}
+                img={project.img}
+                description={project.description}
+                buttonText={project.buttonText}
+              />
+            </div>
+          ))}
+          {_.map(projects, (project) => (
+            <div className="flex justify-center items-center">
+              <Project
+                name={project.name}
+                img={project.img}
+                description={project.description}
+                buttonText={project.buttonText}
+              />
+            </div>
+          ))}
+          {_.map(projects, (project) => (
+            <div className="flex justify-center items-center">
+              <Project
+                name={project.name}
+                img={project.img}
+                description={project.description}
+                buttonText={project.buttonText}
+              />
+            </div>
+          ))}
+          {_.map(projects, (project) => (
+            <div className="flex justify-center items-center">
+              <Project
+                name={project.name}
+                img={project.img}
+                description={project.description}
+                buttonText={project.buttonText}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </div>

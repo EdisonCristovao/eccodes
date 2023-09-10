@@ -1,5 +1,5 @@
 import React from "react";
-import shiki from "shiki";
+// import shiki from "shiki";
 
 export default async function page() {
   return (

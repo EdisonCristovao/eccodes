@@ -1,8 +1,9 @@
 import Nav from "@/components/Nav";
 import "@/styles/globals.css";
 import { Fira_Code } from "next/font/google";
-import Footer from "@/components/Footer";
+// import Footer from "@/components/Footer";
 import { OpenFilesProvider } from "@/hooks/useOpenFiles";
+import { NavBarProvider } from "@/hooks/useNavBar";
 
 const firaCode = Fira_Code({ subsets: ["latin"] });
 
@@ -20,13 +21,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={firaCode.className}>
         <OpenFilesProvider>
-          <div className="bg-primary min-h-screen flex flex-col">
-            <Nav />
+          <NavBarProvider>
+            <div className="bg-primary min-h-screen flex flex-col">
+              <Nav />
 
-            <main className="md:grow flex ">{children}</main>
+              <main className="md:grow flex ">{children}</main>
 
-            {/* <Footer /> */}
-          </div>
+              {/* <Footer /> */}
+            </div>
+          </NavBarProvider>
         </OpenFilesProvider>
       </body>
     </html>

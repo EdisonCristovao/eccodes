@@ -1,16 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import React, { Suspense, useState } from "react";
-import {
-  Files,
-  User,
-  Gamepad2,
-  Terminal,
-  Cog,
-  Cpu,
-  Joystick,
-} from "lucide-react";
+import React, { Suspense } from "react";
+import { Files, Terminal, Cpu } from "lucide-react";
 import { Folder } from "@/components/explorer/Folder";
 import { File } from "@/components/explorer/File";
 import { usePathname } from "next/navigation";
