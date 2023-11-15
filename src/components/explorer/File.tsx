@@ -16,7 +16,7 @@ export function File(props: FileProps) {
   return (
     <Link
       data-active={isCurrentActive}
-      className="flex text-sm items-center gap-2 py-1 px-4 pl-10 hover:text-white data-[active=true]:text-white"
+      className="flex text-sm items-center gap-2 py-1 px-4  hover:text-white data-[active=true]:text-white"
       {...props}
     />
   );

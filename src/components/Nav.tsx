@@ -13,7 +13,7 @@ export default function Nav() {
 
   return (
     <nav className="flex justify-between md:justify-start items-center w-full h-14 bg-primary text-secondary-grey border-collapse border border-lines">
-      <div className="w-64 ml-6">
+      <div className="w-56 ml-6">
         <Image src={"/imgs/logo.svg"} alt="" width={80} height={800} />
         {/* <label>EC.codes</label> */}
       </div>
@@ -25,12 +25,14 @@ export default function Nav() {
           active={currentPage}
           setCurrentPage={setCurrentPage}
         ></Link>
+
         <Link
           label="_about-me"
           href={"/editor"}
           active={currentPage}
           setCurrentPage={setCurrentPage}
         ></Link>
+
         <Link
           label="_projects"
           href={"/projects"}
@@ -47,33 +49,27 @@ export default function Nav() {
 
         {isMenuOpen && (
           <div className="absolute top-14 left-0 w-full bg-primary z-10 flex flex-col text-white text-2xl h-full">
-            <div className="border-y py-2 border-lines">
-              <NextLink
-                href={"/"}
-                className="px-6"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                _home
-              </NextLink>
-            </div>
-            <div className="border-y py-2 border-lines">
-              <NextLink
-                href={"/editor"}
-                className="px-6"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                _about-me
-              </NextLink>
-            </div>
-            <div className="border-y py-2 border-lines">
-              <NextLink
-                href={"/projects"}
-                className="px-6"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                _projects
-              </NextLink>
-            </div>
+            <NextLink
+              href={"/"}
+              className="px-6 border-y py-2 border-lines"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <div>_home</div>
+            </NextLink>
+            <NextLink
+              href={"/editor"}
+              className="px-6 border-y py-2 border-lines"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <div>_about-me</div>
+            </NextLink>
+            <NextLink
+              href={"/projects"}
+              className="px-6 border-y py-2 border-lines"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <div>_projects</div>
+            </NextLink>
           </div>
         )}
       </div>

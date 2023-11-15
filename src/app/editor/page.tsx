@@ -4,7 +4,7 @@ import React from "react";
 export default async function page() {
   return (
     <div className="flex justify-center items-center flex-col h-full">
-      <div className="w-1/2">
+      <div className="px-5 md:px-0 mt-5 md:mt-0 md:w-1/2">
         <h2 className="mb-4">Explore My Profile!</h2>
         <p className="mb-4">
           I am thrilled to invite you to explore my profile and discover the
