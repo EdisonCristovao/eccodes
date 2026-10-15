@@ -3,7 +3,7 @@ import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { find } from "lodash";
 
 export const notionClient = new Client({
-  auth: "secret_2UFRQ8I9m93x77Hw06QDtkTTATZGdx77SXPC1r1To5T",
+  auth: process.env.NOTION_TOKEN,
 });
 
 export async function getBlockFromNotion(blockId: string) {
