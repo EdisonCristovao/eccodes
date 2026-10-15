@@ -1,7 +1,9 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import React from "react";
 import CheckBox from "@/components/CheckBox";
 import Project from "@/components/Project";
 import _ from "lodash";
+import { pageMetadata } from "@/lib/site";
 
 const projects = [
   {
@@ -21,6 +23,18 @@ const projects = [
 ];
 
 const techs = ["reactjs", "next"];
+export async function generateMetadata(
+  _props: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  return pageMetadata(parent, {
+    title: "Projects",
+    description:
+      "Projects by Edison Cristovão, full-stack developer — built with React, Next.js and TypeScript.",
+    path: "/projects",
+  });
+}
+
 export default async function page() {
   return (
     <div className="flex ml-[2px] grow text-secondary-grey">
@@ -31,13 +45,14 @@ export default async function page() {
       </div> */}
       <div className="flex grow">
         <div className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] 2xl:grid-cols-[repeat(4,minmax(290px,1fr))] w-full p-6 gap-8 overflow-y-scroll h-[95vh]">
-          {_.map(projects, (project) => (
+          {_.map(projects, (project, index) => (
             <div key={project.name} className="flex justify-center items-center">
               <Project
                 name={project.name}
                 img={project.img}
                 description={project.description}
                 buttonText={project.buttonText}
+                priority={index === 0}
               />
             </div>
           ))}

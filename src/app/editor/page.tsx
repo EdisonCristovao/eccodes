@@ -1,5 +1,19 @@
+import type { Metadata, ResolvingMetadata } from "next";
 import React from "react";
+import { pageMetadata } from "@/lib/site";
 // import shiki from "shiki";
+
+export async function generateMetadata(
+  _props: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  return pageMetadata(parent, {
+    title: "About me",
+    description:
+      "Who Edison Cristovão is: a full-stack developer sharing his profile, bio, terminal and dev setup in a code-editor-like site.",
+    path: "/editor",
+  });
+}
 
 export default async function page() {
   return (

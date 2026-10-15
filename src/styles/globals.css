@@ -78,6 +78,19 @@
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /* cursor do logo EC.c (1 Hz, step-end); reduced-motion via motion-reduce:animate-none */
+  --animate-cursor-blink: cursor-blink 1s step-end infinite;
+  @keyframes cursor-blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,

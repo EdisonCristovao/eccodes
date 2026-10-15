@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Logo from "./Logo";
 import NavLink from "./NavLink";
 import MobileMenu from "./MobileMenu";
 import { NAV_LINKS, isActivePath } from "@/lib/navigation";
@@ -11,10 +11,7 @@ export default function Nav() {
 
   return (
     <header className="flex h-14 w-full items-center justify-between border border-border bg-background text-muted-foreground md:justify-start">
-      <div className="ml-6 w-56">
-        <Image src={"/imgs/logo.svg"} alt="" width={80} height={800} />
-        {/* <label>EC.codes</label> */}
-      </div>
+      <Logo />
 
       <nav aria-label="Main" className="hidden h-full md:flex">
         <ul className="flex h-full">

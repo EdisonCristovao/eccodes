@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import Logo from "./Logo";
 import MobileMenuLink from "./MobileMenuLink";
 import { useMobileMenuOpen } from "@/hooks/useMobileMenu";
 import { NAV_LINKS, isActivePath } from "@/lib/navigation";
@@ -40,6 +40,7 @@ export default function MobileMenu({ pathname }: MobileMenuProps) {
 
       <SheetContent
         side="top"
+        aria-modal="true"
         showCloseButton={false}
         onOpenAutoFocus={(event) => {
           event.preventDefault();
@@ -47,12 +48,12 @@ export default function MobileMenu({ pathname }: MobileMenuProps) {
         }}
         className="inset-0 flex h-dvh w-full max-w-none flex-col gap-0 border-0 bg-background p-0 shadow-none md:hidden data-[side=top]:h-dvh data-[side=top]:border-0 data-[state=open]:duration-200 data-[state=open]:ease-out-expo data-[state=open]:fade-in-0 data-[side=top]:data-[state=open]:slide-in-from-top-2 data-[state=closed]:duration-150 data-[state=closed]:ease-in data-[state=closed]:fade-out-0 data-[side=top]:data-[state=closed]:slide-out-to-top-2 motion-reduce:animate-none"
       >
-        <SheetHeader className="h-14 flex-row items-center justify-between space-y-0 border-b border-border px-6 py-0">
+        <SheetHeader className="h-14 flex-row items-center justify-between space-y-0 border-b border-border pr-6 py-0">
           <SheetTitle className="sr-only">Navigation menu</SheetTitle>
           <SheetDescription className="sr-only">Site sections</SheetDescription>
-          <div className="w-56">
-            <Image src={"/imgs/logo.svg"} alt="" width={80} height={800} />
-          </div>
+          <SheetClose asChild>
+            <Logo />
+          </SheetClose>
           <SheetClose asChild>
             <Button
               variant="ghost"

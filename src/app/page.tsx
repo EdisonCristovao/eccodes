@@ -1,9 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
+import JsonLd from "@/components/JsonLd";
+import { AUTHOR, GITHUB_URL, JOB_TITLE, SITE_URL } from "@/lib/site";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${SITE_URL}/#person`,
+  name: AUTHOR,
+  url: SITE_URL,
+  jobTitle: JOB_TITLE,
+  image: `${SITE_URL}/imgs/profile-photo.png`,
+  sameAs: [GITHUB_URL],
+  knowsAbout: ["React", "Next.js", "TypeScript", "Node.js"],
+};
 
 export default function Home() {
   return (
     <div className="flex flex-col md:flex-row md:justify-center items-center text-white grow mx-10 my-5 md:my-0">
+      <JsonLd data={personJsonLd} />
       <div className="flex flex-col justify-around h-[80%] md:h-0 mt-40 md:mt-0">
         <div className="mb-10">
           <p className="text-lg md:text-lg">Hi all, I am</p>
@@ -43,6 +58,8 @@ export default function Home() {
           width={500}
           height={593}
           alt=""
+          priority
+          fetchPriority="high"
         />
       </div>
     </div>
