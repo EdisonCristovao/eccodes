@@ -3,9 +3,12 @@ import "@/styles/globals.css";
 import { Fira_Code } from "next/font/google";
 // import Footer from "@/components/Footer";
 import { OpenFilesProvider } from "@/hooks/useOpenFiles";
-import { NavBarProvider } from "@/hooks/useNavBar";
 
-const firaCode = Fira_Code({ subsets: ["latin"] });
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-fira-code",
+  display: "swap",
+});
 
 export const metadata = {
   title: "ec.codes",
@@ -18,18 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={firaCode.className}>
+    <html lang="en" className={firaCode.variable}>
+      <body className="font-sans antialiased">
         <OpenFilesProvider>
-          <NavBarProvider>
-            <div className="bg-primary min-h-screen flex flex-col">
-              <Nav />
+          <div className="bg-primary min-h-screen flex flex-col">
+            <Nav />
 
-              <main className="md:grow flex ">{children}</main>
+            <main className="md:grow flex ">{children}</main>
 
-              {/* <Footer /> */}
-            </div>
-          </NavBarProvider>
+            {/* <Footer /> */}
+          </div>
         </OpenFilesProvider>
       </body>
     </html>

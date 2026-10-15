@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 /*
   Tailwind v4 só aplica `hover:` em dispositivos com suporte a hover
@@ -6,10 +8,65 @@
 */
 @custom-variant hover (&:hover);
 
+/*
+  Tema escuro único: não existe `.dark` no projeto, então as classes `dark:`
+  dos componentes gerados pelo shadcn ficam inertes (sem isso compilariam para
+  @media (prefers-color-scheme: dark) e venceriam as classes do tema).
+*/
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Tema "cara de editor" (shadcn/ui). Tema escuro único, em :root.
+  Decisão 0.1 da spec: `--primary` recebe o fundo do editor (#011627) e
+  `--color-primary` NÃO é reemitido no @theme inline — `bg-primary` continua
+  significando "fundo do editor" em todo o projeto.
+*/
+:root {
+  color-scheme: dark;
+  --radius: 0.25rem;
+
+  --background: #011627; /* primary — fundo do editor */
+  --foreground: #ffffff;
+  --card: #011221; /* primary-light-dark — painéis, cards de projeto */
+  --card-foreground: #ffffff;
+  --popover: #011221;
+  --popover-foreground: #ffffff;
+  --primary: #011627; /* ver decisão 0.1 */
+  --primary-foreground: #ffffff;
+  --secondary: #1c2b3a; /* botão atual */
+  --secondary-hover: #263b50; /* hover do botão atual */
+  --secondary-foreground: #ffffff;
+  --muted: #011221;
+  --muted-foreground: #607b96; /* secondary-grey — texto padrão do editor */
+  --accent: #1e2d3d; /* lines — superfície de hover/seleção */
+  --accent-foreground: #ffffff;
+  --destructive: #e99287; /* accent-nude */
+  --destructive-foreground: #01080e;
+  --border: #1e2d3d; /* lines */
+  --input: #1e2d3d;
+  --ring: #fea55f; /* orange-light — foco e aba ativa */
+
+  --chart-1: #43d9ad;
+  --chart-2: #4d5bce;
+  --chart-3: #fea55f;
+  --chart-4: #e99287;
+  --chart-5: #607b96;
+
+  --sidebar: #011627; /* explorer */
+  --sidebar-foreground: #607b96;
+  --sidebar-primary: #fea55f;
+  --sidebar-primary-foreground: #01080e;
+  --sidebar-accent: #011221;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1e2d3d;
+  --sidebar-ring: #fea55f;
+}
+
 @theme {
+  /* tokens do projeto — manter todos */
   --color-black: #000;
   --color-white: #fff;
-  --color-primary: #011627;
+  --color-primary: #011627; /* NÃO trocar por var(--primary) */
   --color-primary-light-dark: #011221;
   --color-primary-dark: #01080e;
   --color-secondary-grey: #607b96;
@@ -28,21 +85,61 @@
   );
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+@theme inline {
+  /* Fira Code vem do next/font via `--font-fira-code` no <html> (layout.tsx). */
+  --font-sans: var(--font-fira-code), ui-monospace, SFMono-Regular, monospace;
+  --font-mono: var(--font-fira-code), ui-monospace, monospace;
+  --font-heading: var(--font-sans); /* usado por ui/sheet.tsx */
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  /* --color-primary propositalmente ausente (decisão 0.1) */
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: calc(var(--radius) * 0.875);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
@@ -110,26 +207,4 @@
 
 #shiki-code > pre span {
   font-size: 14px !important;
-}
-
-/* Menu mobile */
-.mobile-menu[data-state="open"] .mobile-menu-item {
-  transition-delay: calc(60ms + var(--i, 0) * 40ms);
-}
-
-.mobile-menu[data-state="closed"] .mobile-menu-item {
-  transition-delay: 0ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mobile-menu,
-  .mobile-menu-item,
-  .mobile-menu-icon,
-  .mobile-menu-icon > * {
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
-    translate: none !important;
-    rotate: none !important;
-    scale: none !important;
-  }
 }

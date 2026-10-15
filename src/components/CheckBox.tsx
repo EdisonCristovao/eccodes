@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import { Check } from "lucide-react";
+import React, { useId } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 type CheckBoxProps = {
   label?: string;
@@ -11,21 +11,19 @@ type CheckBoxProps = {
 };
 
 export default function CheckBox({ label, value, setChecked }: CheckBoxProps) {
+  const id = useId();
+
   return (
     <div className="flex mb-5">
-      <Checkbox.Root
-        className="bg-primary border-secondary-grey border rounded-xs w-6 h-6 mr-3 data-[state=checked]:bg-secondary-grey"
+      <Checkbox
+        id={id}
         checked={value}
         onCheckedChange={setChecked}
-        id="c1"
-      >
-        <Checkbox.Indicator>
-          <Check className="text-white" />
-        </Checkbox.Indicator>
-      </Checkbox.Root>
-      <label className="Label" htmlFor="c1">
+        className="size-6 mr-3 border-muted-foreground bg-background data-checked:bg-muted-foreground data-checked:border-muted-foreground data-checked:text-foreground"
+      />
+      <Label htmlFor={id} className="text-base font-normal text-muted-foreground">
         {label}
-      </label>
+      </Label>
     </div>
   );
 }

@@ -1,13 +1,13 @@
-import React from "react";
+import { Ref } from "react";
 import NextLink from "next/link";
 
-type Props = {
+type MobileMenuLinkProps = {
   href: string;
   label: string;
   index: number;
   active: boolean;
-  state: "open" | "closed";
   onNavigate: () => void;
+  ref?: Ref<HTMLAnchorElement>;
 };
 
 export default function MobileMenuLink({
@@ -15,18 +15,18 @@ export default function MobileMenuLink({
   label,
   index,
   active,
-  state,
   onNavigate,
-}: Props) {
+  ref,
+}: MobileMenuLinkProps) {
   return (
     <NextLink
+      ref={ref}
       href={href}
-      data-state={state}
       data-active={active}
       aria-current={active ? "page" : undefined}
       onClick={onNavigate}
-      style={{ "--i": index } as React.CSSProperties}
-      className="mobile-menu-item block w-full min-h-[56px] px-6 py-4 text-2xl border-b border-lines border-l-2 border-l-transparent text-secondary-grey data-[active=true]:text-white data-[active=true]:border-l-orange-light hover:text-white hover:bg-primary-light-dark active:bg-primary-dark focus-visible:outline-2 focus-visible:outline-orange-light focus-visible:-outline-offset-2 focus-visible:text-white transition-[translate,opacity] duration-200 ease-out-expo data-[state=open]:translate-x-0 data-[state=open]:opacity-100 data-[state=closed]:-translate-x-3 data-[state=closed]:opacity-0 data-[state=closed]:duration-[120ms] data-[state=closed]:ease-in"
+      style={{ animationDelay: `${60 + index * 40}ms` }}
+      className="block min-h-14 border-b border-l-2 border-border border-l-transparent px-6 py-4 text-2xl text-muted-foreground hover:bg-card hover:text-foreground focus-visible:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring active:bg-primary-dark data-[active=true]:border-l-ring data-[active=true]:text-foreground animate-in fade-in-0 slide-in-from-left-3 fill-mode-both duration-200 ease-out-expo motion-reduce:animate-none"
     >
       {label}
     </NextLink>

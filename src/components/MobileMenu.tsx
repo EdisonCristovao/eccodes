@@ -1,0 +1,87 @@
+"use client";
+
+import { useRef } from "react";
+import Image from "next/image";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import MobileMenuLink from "./MobileMenuLink";
+import { useMobileMenuOpen } from "@/hooks/useMobileMenu";
+import { NAV_LINKS, isActivePath } from "@/lib/navigation";
+
+type MobileMenuProps = {
+  pathname: string;
+};
+
+export default function MobileMenu({ pathname }: MobileMenuProps) {
+  const [open, setOpen] = useMobileMenuOpen();
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Open menu"
+          className="mr-3 md:hidden"
+        >
+          <Menu className="size-6" aria-hidden />
+        </Button>
+      </SheetTrigger>
+
+      <SheetContent
+        side="top"
+        showCloseButton={false}
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          firstLinkRef.current?.focus();
+        }}
+        className="inset-0 flex h-dvh w-full max-w-none flex-col gap-0 border-0 bg-background p-0 shadow-none md:hidden data-[side=top]:h-dvh data-[side=top]:border-0 data-[state=open]:duration-200 data-[state=open]:ease-out-expo data-[state=open]:fade-in-0 data-[side=top]:data-[state=open]:slide-in-from-top-2 data-[state=closed]:duration-150 data-[state=closed]:ease-in data-[state=closed]:fade-out-0 data-[side=top]:data-[state=closed]:slide-out-to-top-2 motion-reduce:animate-none"
+      >
+        <SheetHeader className="h-14 flex-row items-center justify-between space-y-0 border-b border-border px-6 py-0">
+          <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+          <SheetDescription className="sr-only">Site sections</SheetDescription>
+          <div className="w-56">
+            <Image src={"/imgs/logo.svg"} alt="" width={80} height={800} />
+          </div>
+          <SheetClose asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Close menu"
+              className="-mr-3 animate-in spin-in-90 fade-in-0 duration-200 motion-reduce:animate-none"
+            >
+              <X className="size-6" aria-hidden />
+            </Button>
+          </SheetClose>
+        </SheetHeader>
+
+        <nav aria-label="Mobile" className="flex flex-col overflow-y-auto">
+          <ul>
+            {NAV_LINKS.map((link, index) => (
+              <li key={link.href}>
+                <MobileMenuLink
+                  ref={index === 0 ? firstLinkRef : undefined}
+                  href={link.href}
+                  label={link.label}
+                  index={index}
+                  active={isActivePath(pathname, link.href)}
+                  onNavigate={() => setOpen(false)}
+                />
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </SheetContent>
+    </Sheet>
+  );
+}
