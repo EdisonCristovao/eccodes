@@ -14,7 +14,7 @@ export default function CheckBox({ label, value, setChecked }: CheckBoxProps) {
   return (
     <div className="flex mb-5">
       <Checkbox.Root
-        className="bg-primary border-secondary-grey border rounded-sm w-6 h-6 mr-3 data-[state=checked]:bg-secondary-grey"
+        className="bg-primary border-secondary-grey border rounded-xs w-6 h-6 mr-3 data-[state=checked]:bg-secondary-grey"
         checked={value}
         onCheckedChange={setChecked}
         id="c1"

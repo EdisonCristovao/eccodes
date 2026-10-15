@@ -65,7 +65,7 @@ export default function Nav() {
         aria-expanded={isOpen}
         aria-controls="mobile-menu"
         onClick={toggle}
-        className="md:hidden mr-6 w-11 h-11 flex items-center justify-center rounded-sm text-secondary-grey hover:text-white focus-visible:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-light focus-visible:outline-offset-2"
+        className="md:hidden mr-6 w-11 h-11 flex items-center justify-center rounded-xs text-secondary-grey hover:text-white focus-visible:text-white focus-visible:outline-2 focus-visible:outline-orange-light focus-visible:outline-offset-2"
       >
         <span
           data-state={state}
@@ -74,12 +74,12 @@ export default function Nav() {
           <Menu
             size={24}
             aria-hidden="true"
-            className="absolute inset-0 transition-[transform,opacity] duration-200 ease-out-expo group-data-[state=closed]:rotate-0 group-data-[state=closed]:scale-100 group-data-[state=closed]:opacity-100 group-data-[state=open]:rotate-90 group-data-[state=open]:scale-75 group-data-[state=open]:opacity-0"
+            className="absolute inset-0 transition-[rotate,scale,opacity] duration-200 ease-out-expo group-data-[state=closed]:rotate-0 group-data-[state=closed]:scale-100 group-data-[state=closed]:opacity-100 group-data-[state=open]:rotate-90 group-data-[state=open]:scale-75 group-data-[state=open]:opacity-0"
           />
           <X
             size={24}
             aria-hidden="true"
-            className="absolute inset-0 transition-[transform,opacity] duration-200 ease-out-expo group-data-[state=closed]:-rotate-90 group-data-[state=closed]:scale-75 group-data-[state=closed]:opacity-0 group-data-[state=open]:rotate-0 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100"
+            className="absolute inset-0 transition-[rotate,scale,opacity] duration-200 ease-out-expo group-data-[state=closed]:-rotate-90 group-data-[state=closed]:scale-75 group-data-[state=closed]:opacity-0 group-data-[state=open]:rotate-0 group-data-[state=open]:scale-100 group-data-[state=open]:opacity-100"
           />
         </span>
       </button>
@@ -89,7 +89,7 @@ export default function Nav() {
         role="dialog"
         aria-label="Menu de navegação"
         data-state={state}
-        className="mobile-menu md:hidden fixed inset-x-0 top-14 h-[calc(100vh-3.5rem)] supports-[height:100dvh]:h-[calc(100dvh-3.5rem)] bg-primary border-t border-lines z-40 flex flex-col overflow-y-auto transition-[transform,opacity] data-[state=closed]:transition-[transform,opacity,visibility] duration-200 ease-out-expo data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:visible data-[state=closed]:-translate-y-2 data-[state=closed]:opacity-0 data-[state=closed]:invisible data-[state=closed]:pointer-events-none data-[state=closed]:duration-150 data-[state=closed]:ease-in"
+        className="mobile-menu md:hidden fixed inset-x-0 top-14 h-[calc(100vh-3.5rem)] supports-[height:100dvh]:h-[calc(100dvh-3.5rem)] bg-primary border-t border-lines z-40 flex flex-col overflow-y-auto transition-[translate,opacity] data-[state=closed]:transition-[translate,opacity,visibility] duration-200 ease-out-expo data-[state=open]:translate-y-0 data-[state=open]:opacity-100 data-[state=open]:visible data-[state=closed]:-translate-y-2 data-[state=closed]:opacity-0 data-[state=closed]:invisible data-[state=closed]:pointer-events-none data-[state=closed]:duration-150 data-[state=closed]:ease-in"
       >
         <nav ref={mobileNavRef} className="flex flex-col">
           {links.map(({ label, href }, index) => (

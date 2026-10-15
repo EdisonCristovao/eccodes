@@ -32,7 +32,7 @@ export default async function page() {
       <div className="flex grow">
         <div className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] 2xl:grid-cols-[repeat(4,minmax(290px,1fr))] w-full p-6 gap-8 overflow-y-scroll h-[95vh]">
           {_.map(projects, (project) => (
-            <div className="flex justify-center items-center">
+            <div key={project.name} className="flex justify-center items-center">
               <Project
                 name={project.name}
                 img={project.img}

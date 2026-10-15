@@ -6,7 +6,7 @@ type UseMobileMenuReturn = {
   isOpen: boolean;
   toggle: () => void;
   close: () => void;
-  buttonRef: RefObject<HTMLButtonElement>;
+  buttonRef: RefObject<HTMLButtonElement | null>;
 };
 
 const DESKTOP_MEDIA_QUERY = "(min-width: 768px)";
@@ -44,10 +44,14 @@ export function useMobileMenu(): UseMobileMenuReturn {
     };
   }, [isOpen]);
 
-  // Fecha ao mudar de rota (links, back/forward)
-  useEffect(() => {
-    close();
-  }, [pathname, close]);
+  // Fecha ao mudar de rota (links, back/forward). Ajuste de estado durante o
+  // render (padrão "storing information from previous renders" do React) em vez
+  // de setState dentro de useEffect, que o react-hooks v7 bloqueia.
+  const [previousPathname, setPreviousPathname] = useState(pathname);
+  if (pathname !== previousPathname) {
+    setPreviousPathname(pathname);
+    setIsOpen(false);
+  }
 
   // Fecha ao passar para desktop (>= 768px)
   useEffect(() => {

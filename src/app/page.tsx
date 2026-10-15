@@ -41,7 +41,7 @@ export default function Home() {
         <Image
           src={"/imgs/profile-photo.png"}
           width={500}
-          height={200}
+          height={593}
           alt=""
         />
       </div>
