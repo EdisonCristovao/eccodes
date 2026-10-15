@@ -68,3 +68,23 @@ code .line::before {
 #shiki-code > pre span {
   font-size: 14px !important;
 }
+
+/* Menu mobile */
+.mobile-menu[data-state="open"] .mobile-menu-item {
+  transition-delay: calc(60ms + var(--i, 0) * 40ms);
+}
+
+.mobile-menu[data-state="closed"] .mobile-menu-item {
+  transition-delay: 0ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu-item,
+  .mobile-menu-icon,
+  .mobile-menu-icon > * {
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    transform: none !important;
+  }
+}

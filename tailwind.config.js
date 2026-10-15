@@ -23,6 +23,9 @@ module.exports = {
         lines: "#1E2D3D",
         "orange-light": "#FEA55F",
       },
+      transitionTimingFunction: {
+        "out-expo": "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
