@@ -37,7 +37,7 @@
   --secondary-hover: #263b50; /* hover do botão atual */
   --secondary-foreground: #ffffff;
   --muted: #011221;
-  --muted-foreground: #607b96; /* secondary-grey — texto padrão do editor */
+  --muted-foreground: #6f8ba8; /* texto padrão do editor — ≈5,2:1 sobre #011627 (item 10) */
   --accent: #1e2d3d; /* lines — superfície de hover/seleção */
   --accent-foreground: #ffffff;
   --destructive: #e99287; /* accent-nude */
@@ -53,7 +53,7 @@
   --chart-5: #607b96;
 
   --sidebar: #011627; /* explorer */
-  --sidebar-foreground: #607b96;
+  --sidebar-foreground: #6f8ba8;
   --sidebar-primary: #fea55f;
   --sidebar-primary-foreground: #01080e;
   --sidebar-accent: #011221;
@@ -69,7 +69,7 @@
   --color-primary: #011627; /* NÃO trocar por var(--primary) */
   --color-primary-light-dark: #011221;
   --color-primary-dark: #01080e;
-  --color-secondary-grey: #607b96;
+  --color-secondary-grey: #6f8ba8; /* alias legado de --muted-foreground (item 23 remove) */
   --color-secondary-blue: #4d5bce;
   --color-accent-green: #43d9ad;
   --color-accent-nude: #e99287;

@@ -1,12 +1,11 @@
 "use client";
 
-import { ReactNode } from "react";
-import Link, { LinkProps } from "next/link";
+import type { ComponentProps } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface FileProps extends LinkProps {
-  children: ReactNode[];
-}
+// Props do NextLink + atributos de <a> (target, rel, aria-label…) para links externos.
+type FileProps = ComponentProps<typeof Link>;
 
 export function File(props: FileProps) {
   const pathName = usePathname();

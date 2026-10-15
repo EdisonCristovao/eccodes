@@ -37,14 +37,14 @@ export async function generateMetadata(
 
 export default async function page() {
   return (
-    <div className="flex ml-[2px] grow text-secondary-grey">
+    <div className="flex min-w-0 grow text-muted-foreground">
       {/* <div className="w-64 border-r border-lines h-full lg:flex flex-col pl-5 pt-5 hidden ">
         {_.map(techs, (tech) => (
           <CheckBox label={tech} />
         ))}
       </div> */}
-      <div className="flex grow">
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] 2xl:grid-cols-[repeat(4,minmax(290px,1fr))] w-full p-6 gap-8 overflow-y-scroll h-[95vh]">
+      <div className="flex min-w-0 grow">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] 2xl:grid-cols-[repeat(4,minmax(290px,1fr))] w-full min-w-0 p-6 gap-8">
           {_.map(projects, (project, index) => (
             <div key={project.name} className="flex justify-center items-center">
               <Project

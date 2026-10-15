@@ -57,7 +57,7 @@ export default function Home() {
           src={"/imgs/profile-photo.png"}
           width={500}
           height={593}
-          alt=""
+          alt="Edison Cristovão"
           priority
           fetchPriority="high"
         />

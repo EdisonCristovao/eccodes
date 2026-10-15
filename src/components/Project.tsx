@@ -28,7 +28,7 @@ export default function Project({
             src={img}
             width={500}
             height={500}
-            alt=""
+            alt={name}
             priority={priority}
             fetchPriority={priority ? "high" : undefined}
           />
