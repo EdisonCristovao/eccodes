@@ -1,26 +1,27 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
-import { ReactNode, useState } from "react";
 
-interface SectionProps {
+type SectionProps = {
   title: string;
   children: ReactNode;
   defaultOpen?: boolean;
-  onClick(): void;
-}
+  onOpenChange?: (open: boolean) => void;
+};
 
+/** Seção do explorer (guia §5.3): header h-8 em maiúsculas + chevron que gira 90°. */
 export function Section({
   title,
   children,
   defaultOpen = false,
-  onClick,
+  onOpenChange,
 }: SectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -29,25 +30,25 @@ export function Section({
       open={isOpen}
       onOpenChange={(value) => {
         setIsOpen(value);
-        onClick();
+        onOpenChange?.(value);
       }}
     >
       <CollapsibleTrigger asChild>
         <Button
           variant="ghost"
-          className="group w-full justify-start gap-2 rounded-none h-auto px-2 py-2 font-normal text-foreground border-x-transparent border-y-border"
+          className="group h-8 w-full justify-start gap-1 rounded-none px-2 text-xs font-normal uppercase tracking-wider text-muted-foreground hover:text-foreground"
         >
           <ChevronRight
-            size={20}
-            className="size-5 transition-transform duration-200 ease-out-expo group-data-[state=open]:rotate-90 motion-reduce:transition-none"
-            aria-hidden
+            size={16}
+            className="size-4 transition-transform duration-200 ease-out-expo group-data-[state=open]:rotate-90 motion-reduce:transition-none"
+            aria-hidden="true"
           />
-          <span className="text-sm">{title}</span>
+          <span>{title}</span>
         </Button>
       </CollapsibleTrigger>
 
-      <CollapsibleContent className="my-2 overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up motion-reduce:animate-none">
-        {children}
+      <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up motion-reduce:animate-none">
+        <ul>{children}</ul>
       </CollapsibleContent>
     </Collapsible>
   );

@@ -14,7 +14,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://edison.cristovao.codes";
 export const SITE_NAME = "EC.c";
 export const AUTHOR = "Edison Cristovão";
-export const GITHUB_URL = "https://github.com/EdisonCristovao";
+export { GITHUB_URL } from "@/lib/navigation";
 /** Valores em inglês (idioma padrão); por idioma, usar `pages[lang]`. */
 export const JOB_TITLE = pages.en.jsonld.jobTitle;
 export const DEFAULT_TITLE = pages.en.seo.defaultTitle;

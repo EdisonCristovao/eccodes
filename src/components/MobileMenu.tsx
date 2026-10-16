@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/sheet";
 import Logo from "./Logo";
 import MobileMenuLink from "./MobileMenuLink";
-import LanguageSwitcher from "./LanguageSwitcher";
 import { ui } from "@/dictionaries/ui";
 import { useMobileMenuOpen } from "@/hooks/useMobileMenu";
 import { NAV_LINKS, isActivePath } from "@/lib/navigation";
@@ -89,9 +88,6 @@ export default function MobileMenu({ pathname, lang }: MobileMenuProps) {
             ))}
           </ul>
         </nav>
-
-        {/* Provisório: vai para a status bar no item 20. */}
-        <LanguageSwitcher lang={lang} variant="sheet" />
       </SheetContent>
     </Sheet>
   );

@@ -1,25 +1,29 @@
 import type { MetadataRoute } from "next";
+import {
+  EDITOR_FILES,
+  EXPLORER_ORDER,
+  type FileSlug,
+} from "@/lib/editor-files";
 import { LOCALES, localizedPath } from "@/lib/i18n";
 import { absoluteUrl, languageAlternates } from "@/lib/site";
 
-type Entry = Pick<MetadataRoute.Sitemap[number], "changeFrequency" | "priority"> & {
-  path: string;
-};
+type Hints = Pick<MetadataRoute.Sitemap[number], "changeFrequency" | "priority">;
 
-/** Caminhos lógicos; cada um vira uma URL por idioma. */
-const ENTRIES: Entry[] = [
-  { path: "/", changeFrequency: "weekly", priority: 1 },
-  { path: "/editor", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/projects", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/editor/bio", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/editor/terminal", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/editor/others", changeFrequency: "monthly", priority: 0.6 },
-];
+/** Frequência/prioridade por arquivo; os caminhos vêm do registro único. */
+const HINTS: Record<FileSlug, Hints> = {
+  home: { changeFrequency: "weekly", priority: 1 },
+  about: { changeFrequency: "monthly", priority: 0.8 },
+  projects: { changeFrequency: "weekly", priority: 0.8 },
+  bio: { changeFrequency: "monthly", priority: 0.6 },
+  terminal: { changeFrequency: "monthly", priority: 0.6 },
+  others: { changeFrequency: "monthly", priority: 0.6 },
+};
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
-  return ENTRIES.flatMap(({ path, changeFrequency, priority }) => {
+  return EXPLORER_ORDER.flatMap((slug) => {
+    const { path } = EDITOR_FILES[slug];
     const languages = Object.fromEntries(
       Object.entries(languageAlternates(path)).map(([hreflang, href]) => [
         hreflang,
@@ -30,8 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return LOCALES.map((lang) => ({
       url: absoluteUrl(localizedPath(lang, path)),
       lastModified,
-      changeFrequency,
-      priority,
+      ...HINTS[slug],
       alternates: { languages },
     }));
   });

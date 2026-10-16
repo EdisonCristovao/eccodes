@@ -5,8 +5,11 @@ import { Fira_Code } from "next/font/google";
 import { notFound } from "next/navigation";
 import { HTML_LANG, LOCALES, hasLocale, type Locale } from "@/lib/i18n";
 import { localeFromParams, siteMetadata } from "@/lib/site";
-// import Footer from "@/components/Footer";
+import TabBar from "@/components/editor/TabBar";
+import StatusBar from "@/components/editor/StatusBar";
+import Explorer from "@/components/explorer/Explorer";
 import { OpenFilesProvider } from "@/hooks/useOpenFiles";
+import { EditorStatusProvider } from "@/hooks/useEditorStatus";
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
@@ -56,13 +59,20 @@ export default async function RootLayout({
     <html lang={HTML_LANG[locale]} className={firaCode.variable}>
       <body className="font-sans antialiased">
         <OpenFilesProvider>
-          <div className="bg-primary min-h-screen flex flex-col">
-            <Nav />
-
-            <main className="md:grow flex ">{children}</main>
-
-            {/* <Footer /> */}
-          </div>
+          <EditorStatusProvider>
+            {/* Shell de editor (item 20): chrome fixo, só o corpo do pane rola. */}
+            <div className="flex h-dvh flex-col overflow-hidden bg-background">
+              <Nav />
+              <TabBar />
+              <div className="flex min-h-0 flex-1">
+                <Explorer className="hidden md:flex" />
+                <main className="flex min-h-0 min-w-0 flex-1 flex-col">
+                  {children}
+                </main>
+              </div>
+              <StatusBar branch={process.env.VERCEL_GIT_COMMIT_REF ?? "main"} />
+            </div>
+          </EditorStatusProvider>
         </OpenFilesProvider>
       </body>
     </html>

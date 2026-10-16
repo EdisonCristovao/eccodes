@@ -15,12 +15,8 @@ import {
 } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-type Variant = "nav" | "sheet" | "statusbar";
-
 type LanguageSwitcherProps = {
   lang: Locale;
-  /** nav: ponta direita do header (≥768px) · sheet: última linha do menu mobile · statusbar: item 20. */
-  variant: Variant;
   className?: string;
 };
 
@@ -30,9 +26,9 @@ function rememberLocale(to: Locale) {
   document.cookie = `${LANG_COOKIE}=${to}; path=/; max-age=${LANG_COOKIE_MAX_AGE}; SameSite=Lax`;
 }
 
-type LinksProps = { lang: Locale; variant: Variant; query: string };
+type LinksProps = { lang: Locale; query: string };
 
-function Links({ lang, variant, query }: LinksProps) {
+function Links({ lang, query }: LinksProps) {
   const pathname = usePathname();
   const dict = ui[lang].lang;
 
@@ -56,8 +52,7 @@ function Links({ lang, variant, query }: LinksProps) {
                 aria-current={current ? "true" : undefined}
                 onClick={() => rememberLocale(to)}
                 className={cn(
-                  "inline-flex items-center justify-center px-2 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none",
-                  variant === "sheet" ? "min-h-11" : "min-h-6",
+                  "inline-flex min-h-6 items-center justify-center px-1 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none",
                   current
                     ? "border-b border-b-ring text-foreground"
                     : "text-muted-foreground hover:text-foreground",
@@ -84,30 +79,24 @@ function LinksWithQuery(props: Omit<LinksProps, "query">) {
 }
 
 /**
- * Seletor de idioma: dois links `EN · PT` com hreflang/lang/aria-current,
- * que preservam a rota (e a query) e gravam o cookie `lang` no clique.
- * Funciona sem JS (só não persiste a escolha).
+ * Seletor de idioma da status bar (item 20, D7): dois links `EN · PT` com
+ * hreflang/lang/aria-current, que preservam a rota (e a query) e gravam o
+ * cookie `lang` no clique. Funciona sem JS (só não persiste a escolha).
  */
 export default function LanguageSwitcher({
   lang,
-  variant,
   className,
 }: LanguageSwitcherProps) {
   const dict = ui[lang].lang;
-  const variantClass: Record<Variant, string> = {
-    nav: "ml-auto hidden h-full items-center gap-2 border-l border-border px-6 md:flex",
-    sheet: "flex min-h-14 items-center justify-between border-t border-border px-6",
-    statusbar: "flex items-center gap-2",
-  };
 
   return (
-    <nav aria-label={dict.label} className={cn(variantClass[variant], className)}>
-      <span className="flex items-center gap-2 text-xs text-muted-foreground">
-        <Languages size={14} aria-hidden="true" />
-        {variant === "sheet" && <span className="text-sm">{dict.label}</span>}
-      </span>
-      <Suspense fallback={<Links lang={lang} variant={variant} query="" />}>
-        <LinksWithQuery lang={lang} variant={variant} />
+    <nav
+      aria-label={dict.label}
+      className={cn("flex shrink-0 items-center gap-2", className)}
+    >
+      <Languages size={14} aria-hidden="true" />
+      <Suspense fallback={<Links lang={lang} query="" />}>
+        <LinksWithQuery lang={lang} />
       </Suspense>
     </nav>
   );

@@ -1,7 +1,9 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import EditorPane from "@/components/editor/EditorPane";
 import Project from "@/components/Project";
 import { PROJECTS } from "@/content/projects";
 import { pages } from "@/dictionaries/pages";
+import { EDITOR_FILES } from "@/lib/editor-files";
 import { fill } from "@/lib/i18n";
 import { localeFromParams, pageMetadata } from "@/lib/site";
 
@@ -25,24 +27,23 @@ export default async function ProjectsPage({ params }: ProjectsProps) {
   const lang = await localeFromParams(params);
   const { projects } = pages[lang];
 
+  // Só "encaixa no pane" (D5): a grade é a de hoje; o conteúdo é o item 8.
   return (
-    <div className="flex min-w-0 grow text-muted-foreground">
-      <div className="flex min-w-0 grow">
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(290px,1fr))] 2xl:grid-cols-[repeat(4,minmax(290px,1fr))] w-full min-w-0 p-6 gap-8">
-          {PROJECTS.map((project, index) => (
-            <div key={project.slug} className="flex justify-center items-center">
-              <Project
-                name={project.name}
-                img={project.img}
-                description={projects.items[project.slug].description}
-                buttonText={fill(projects.open, { name: project.title })}
-                url={project.url}
-                priority={index === 0}
-              />
-            </div>
-          ))}
-        </div>
+    <EditorPane file={EDITOR_FILES.projects} gutter="none" bodyClassName="text-muted-foreground">
+      <div className="grid w-full min-w-0 grid-cols-[repeat(auto-fill,minmax(290px,1fr))] gap-8 py-4 2xl:grid-cols-[repeat(4,minmax(290px,1fr))]">
+        {PROJECTS.map((project, index) => (
+          <div key={project.slug} className="flex items-center justify-center">
+            <Project
+              name={project.name}
+              img={project.img}
+              description={projects.items[project.slug].description}
+              buttonText={fill(projects.open, { name: project.title })}
+              url={project.url}
+              priority={index === 0}
+            />
+          </div>
+        ))}
       </div>
-    </div>
+    </EditorPane>
   );
 }

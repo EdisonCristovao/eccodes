@@ -78,6 +78,14 @@
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /* Tokens de sintaxe (guia §2.2): keyword, name, string, active, comment, punct */
+  --color-syntax-keyword: #4d5bce;
+  --color-syntax-name: #43d9ad;
+  --color-syntax-string: #e99287;
+  --color-syntax-active: #fea55f;
+  --color-syntax-comment: #6f8ba8;
+  --color-syntax-punct: #ffffff;
+
   /* cursor do logo EC.c (1 Hz, step-end); reduced-motion via motion-reduce:animate-none */
   --animate-cursor-blink: cursor-blink 1s step-end infinite;
   @keyframes cursor-blink {
@@ -197,27 +205,63 @@
   h5 {
     font-size: 14px;
   }
-
-  code {
-    counter-reset: step;
-    counter-increment: step 0;
-  }
-
-  code .line::before {
-    content: counter(step);
-    counter-increment: step;
-    width: 2.5rem;
-    margin-right: 1rem;
-    display: inline-block;
-    text-align: right;
-    color: #8f8ca8;
-  }
 }
 
-#shiki-code > pre {
-  background-color: #011627 !important;
+/* Escala de editor (guia §3) */
+@utility text-editor {
+  font-size: 13px;
+  line-height: 20px;
+}
+@utility text-file-title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
 }
 
-#shiki-code > pre span {
-  font-size: 14px !important;
+/*
+  Gutter unificado do EditorPane (item 20): contador CSS no corpo do pane.
+  Todo `.line` (CodeLine ou span.line do shiki) incrementa e desenha o número
+  em ::before; avisos (`data-unnumbered`) ficam alinhados, sem número.
+*/
+.editor-body {
+  counter-reset: line;
+}
+.editor-body .line {
+  display: flex;
+  min-height: 20px;
+}
+.editor-body .line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex: 0 0 3rem;
+  padding-right: 0.75rem;
+  margin-right: 1rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-syntax-comment);
+  background: var(--color-background);
+  user-select: none;
+}
+.editor-body .line:hover::before,
+.editor-body .line[data-current]::before {
+  color: var(--color-syntax-active);
+}
+.editor-body[data-gutter="none"] .line::before {
+  content: none;
+}
+.editor-body .line[data-unnumbered]::before {
+  content: "";
+  counter-increment: none;
+}
+.editor-body .shiki {
+  background: transparent !important;
+  padding: 0;
+}
+.editor-body .shiki code {
+  display: block;
+  /* as quebras entre os span.line (agora flex) não viram linhas vazias */
+  white-space: normal;
 }

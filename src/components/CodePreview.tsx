@@ -1,15 +1,20 @@
-import React from "react";
-
 type CodePreviewProps = {
-  code: string | TrustedHTML;
+  /** HTML do shiki (`<pre class="shiki"><code><span class="line">…`). */
+  html: string | TrustedHTML;
+  /** Idioma do conteúdo quando difere da página (fallback EN). */
+  lang?: string;
 };
 
-export default function CodePreview({ code }: CodePreviewProps) {
+/**
+ * Código colorido dentro do EditorPane: o gutter vem do `.editor-body`
+ * (cada `span.line` do shiki conta uma linha) e o scroll é do corpo do pane.
+ */
+export default function CodePreview({ html, lang }: CodePreviewProps) {
   return (
     <div
-      id="shiki-code"
-      className="min-w-0 overflow-x-auto overflow-y-auto leading-relaxed scrollbar scrollbar-thumb-[#2B283B] scrollbar-track-transparent"
-      dangerouslySetInnerHTML={{ __html: code }}
+      className="min-w-0"
+      lang={lang}
+      dangerouslySetInnerHTML={{ __html: html }}
     />
   );
 }

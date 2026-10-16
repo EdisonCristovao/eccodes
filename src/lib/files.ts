@@ -1,21 +1,24 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Lang } from "shiki";
+import { EDITOR_FILES, type EditorFile } from "@/lib/editor-files";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 
-export type FileSlug = "bio" | "terminal" | "others";
+/** Arquivos com conteúdo em `src/content/` (subconjunto do registro). */
+export type ContentSlug = "bio" | "terminal" | "others";
+/** @deprecated alias de `ContentSlug`; o registro geral está em `@/lib/editor-files`. */
+export type FileSlug = ContentSlug;
 
 type ContentLoader = () => Promise<string>;
 
 export type CodeFile = {
-  slug: FileSlug;
-  /** Rota lógica da página (sem prefixo de idioma): canonical, og:url, sitemap. */
-  path: `/editor/${FileSlug}`;
-  /** Nome do arquivo no explorer/aba — não se traduz. */
-  title: string;
+  slug: ContentSlug;
+  /** Rota lógica (sem prefixo de idioma): canonical, og:url, sitemap. */
+  path: EditorFile["path"];
+  /** Nome exibido (aba/explorer/breadcrumb) — vem do registro, não se traduz. */
+  name: string;
+  /** Linguagem do shiki (do registro). */
+  lang: "js" | "md";
   description: string;
-  /** Linguagem usada pelo shiki para colorir o conteúdo. */
-  lang: Lang;
   /**
    * Conteúdo por idioma, lido de `src/content/`. `en` é obrigatório; sem
    * versão no idioma pedido, `resolveContent` cai no inglês e avisa.
@@ -29,39 +32,41 @@ const load =
   () =>
     readFile(join(CONTENT_DIR, name), "utf8");
 
-/**
- * Fonte única dos "arquivos" do editor. O conteúdo vive em `src/content/`
- * (versionado, sem serviço externo). O item 6 do backlog estende este mapa
- * (label, extensão, ícone) para o explorer, abas e ⌘K.
- */
-export const FILES: Record<FileSlug, CodeFile> = {
-  bio: {
-    slug: "bio",
-    path: "/editor/bio",
-    title: "Bio",
-    description:
-      "Edison Cristovão's bio as a code file: background, stack and what he's working on.",
-    lang: "js",
-    content: { en: load("bio.js"), pt: load("bio.pt.js") },
-  },
-  terminal: {
-    slug: "terminal",
-    path: "/editor/terminal",
-    title: "Terminal",
-    description: "Edison Cristovão's terminal setup: shell, prompt and tools.",
-    lang: "md",
+function define(
+  slug: ContentSlug,
+  description: string,
+  content: CodeFile["content"],
+): CodeFile {
+  const file = EDITOR_FILES[slug];
+  return {
+    slug,
+    path: file.path,
+    name: file.name,
+    // Os três arquivos de conteúdo têm `shiki` no registro.
+    lang: file.shiki ?? "md",
+    description,
+    content,
+  };
+}
+
+/** Loaders de conteúdo dos arquivos do editor (só servidor). */
+export const FILES: Record<ContentSlug, CodeFile> = {
+  bio: define(
+    "bio",
+    "Edison Cristovão's bio as a code file: background, stack and what he's working on.",
+    { en: load("bio.js"), pt: load("bio.pt.js") },
+  ),
+  terminal: define(
+    "terminal",
+    "Edison Cristovão's terminal setup: shell, prompt and tools.",
     // Só comandos/links: um arquivo para os dois idiomas (aviso de fallback em PT).
-    content: { en: load("terminal.md") },
-  },
-  others: {
-    slug: "others",
-    path: "/editor/others",
-    title: "dev.setup",
-    description:
-      "Edison Cristovão's dev setup: editor, extensions, fonts and configs.",
-    lang: "md",
-    content: { en: load("others.md") },
-  },
+    { en: load("terminal.md") },
+  ),
+  others: define(
+    "others",
+    "Edison Cristovão's dev setup: editor, extensions, fonts and configs.",
+    { en: load("others.md") },
+  ),
 };
 
 export type ResolvedContent = {

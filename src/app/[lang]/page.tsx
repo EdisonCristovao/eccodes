@@ -1,6 +1,9 @@
 import Image from "next/image";
+import EditorPane from "@/components/editor/EditorPane";
+import Token from "@/components/editor/Token";
 import JsonLd from "@/components/JsonLd";
 import { pages } from "@/dictionaries/pages";
+import { EDITOR_FILES } from "@/lib/editor-files";
 import { HTML_LANG, localizedPath } from "@/lib/i18n";
 import { AUTHOR, GITHUB_URL, SITE_URL, localeFromParams } from "@/lib/site";
 
@@ -26,43 +29,46 @@ export default async function Home({ params }: HomeProps) {
     knowsAbout: ["React", "Next.js", "TypeScript", "Node.js"],
   };
 
+  // Só "encaixa no pane" (D5): o conteúdo da home é o item 4.
   return (
-    <div className="flex flex-col md:flex-row md:justify-center items-center text-foreground grow mx-10 my-5 md:my-0">
+    <EditorPane
+      file={EDITOR_FILES.home}
+      gutter="none"
+      // Abaixo de lg o arquivo começa no topo (guia §1); a linha texto + foto só ≥1024,
+      // onde o pane (viewport − explorer 240px) comporta as duas colunas.
+      bodyClassName="flex flex-col gap-10 py-6 lg:flex-row lg:items-center lg:justify-center"
+    >
       <JsonLd data={personJsonLd} />
-      <div className="flex flex-col justify-around h-[80%] md:h-0 mt-40 md:mt-0">
-        <div className="mb-10">
-          <p className="text-lg md:text-lg">{home.greeting}</p>
-          <h1 className="text-6xl md:text-7xl ml-[-8px] my-[-8px]">
+      <div className="flex min-w-0 flex-col gap-8 text-foreground">
+        <div className="min-w-0">
+          <p className="text-lg">{home.greeting}</p>
+          <h1 className="text-5xl font-bold tracking-tight break-words sm:text-6xl lg:text-7xl">
             {home.name}
           </h1>
-          <h2 className="text-base md:text-3xl text-secondary-blue">
+          <h2 className="text-base text-syntax-keyword lg:text-3xl">
             {home.role}
           </h2>
         </div>
 
-        <div>
-          <h3 className="text-sm md:text-base">{home.githubComment}</h3>
-          <div>
-            <span className="text-secondary-blue text-sm md:text-base">
-              const
-            </span>{" "}
-            <span className="text-accent-green text-sm md:text-base">
-              {home.githubVar}
-            </span>
+        <div className="min-w-0 text-sm lg:text-base">
+          <p className="text-syntax-comment">{home.githubComment}</p>
+          <p>
+            <Token kind="keyword">const</Token>{" "}
+            <Token kind="name">{home.githubVar}</Token>
             {" = "}
             <a
               href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent-nude hover:underline text-sm md:text-base focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+              className="text-syntax-string break-all hover:underline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
             >
               {`"${GITHUB_URL}"`}
             </a>
-          </div>
+          </p>
         </div>
       </div>
 
-      <div className="hidden md:inline">
+      <div className="hidden min-w-0 lg:block lg:max-w-[40%]">
         <Image
           src={"/imgs/profile-photo.png"}
           width={500}
@@ -70,8 +76,10 @@ export default async function Home({ params }: HomeProps) {
           alt={AUTHOR}
           priority
           fetchPriority="high"
+          sizes="(min-width: 1024px) 40vw, 0px"
+          className="h-auto w-full"
         />
       </div>
-    </div>
+    </EditorPane>
   );
 }

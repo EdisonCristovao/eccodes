@@ -1,37 +1,36 @@
 import type { ReactNode } from "react";
+import CodeLine from "@/components/editor/CodeLine";
 
 type EditorNoticeProps = {
-  /** Linhas exibidas como comentários de código, uma por linha numerada. */
+  /** Linhas exibidas como comentários de código ("// …"). */
   lines: string[];
-  /** Ação opcional (ex.: botão de retry), exibida na última linha numerada. */
+  /** Linha extra opcional (ex.: botão de retry ou link). */
   children?: ReactNode;
+  /** false: alinhadas ao gutter sem número (avisos); true (default): contam como linhas do arquivo. */
+  numbered?: boolean;
 };
 
 /**
- * Mensagem no estilo do editor: gutter numerado + linhas de comentário.
- * Usado pelo estado vazio e pelo error.tsx das páginas de código.
+ * Açúcar sobre `CodeLine kind="comment"` — sem lista ou gutter próprio: o
+ * número vem do `.editor-body` do EditorPane que envolve o aviso.
  */
-export default function EditorNotice({ lines, children }: EditorNoticeProps) {
-  const rows: ReactNode[] = lines.map((line, index) => (
-    <span key={`line-${index}`} className="text-muted-foreground">
-      {line}
-    </span>
-  ));
-  if (children) rows.push(children);
-
+export default function EditorNotice({
+  lines,
+  children,
+  numbered = true,
+}: EditorNoticeProps) {
   return (
-    <ol className="px-6 py-4 text-sm leading-relaxed">
-      {rows.map((content, index) => (
-        <li key={index} className="flex min-h-6 items-center gap-4">
-          <span
-            aria-hidden="true"
-            className="w-8 shrink-0 select-none text-right text-muted-foreground"
-          >
-            {index + 1}
-          </span>
-          {content}
-        </li>
+    <>
+      {lines.map((line, index) => (
+        <CodeLine key={`line-${index}`} kind="comment" numbered={numbered}>
+          {line}
+        </CodeLine>
       ))}
-    </ol>
+      {children && (
+        <CodeLine numbered={numbered} className="items-center gap-2">
+          {children}
+        </CodeLine>
+      )}
+    </>
   );
 }

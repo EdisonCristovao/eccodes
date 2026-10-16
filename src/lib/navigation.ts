@@ -1,5 +1,8 @@
 import { stripLocale } from "@/lib/i18n";
 
+/** Perfil no GitHub (client-safe: usado na status bar e na home). */
+export const GITHUB_URL = "https://github.com/EdisonCristovao";
+
 /** Caminhos lógicos (sem prefixo de idioma); o prefixo entra na renderização via `localizedPath`. */
 export const NAV_LINKS = [
   { label: "_home", href: "/" },
