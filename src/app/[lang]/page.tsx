@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { Image as ImageIcon } from "lucide-react";
+import CodeLine from "@/components/editor/CodeLine";
 import EditorPane from "@/components/editor/EditorPane";
 import Token from "@/components/editor/Token";
 import JsonLd from "@/components/JsonLd";
@@ -10,6 +12,11 @@ import { AUTHOR, GITHUB_URL, SITE_URL, localeFromParams } from "@/lib/site";
 type HomeProps = {
   params: Promise<{ lang: string }>;
 };
+
+// Não se traduz: é a linha 8 do home.tsx e o knowsAbout do JSON-LD.
+const STACK = ["React", "Next.js", "TypeScript", "Node.js"];
+
+const PHOTO = { src: "/imgs/profile-photo.png", width: 1024, height: 1214 };
 
 export default async function Home({ params }: HomeProps) {
   const lang = await localeFromParams(params);
@@ -24,61 +31,118 @@ export default async function Home({ params }: HomeProps) {
     url: `${SITE_URL}${localizedPath(lang, "/")}`,
     inLanguage: HTML_LANG[lang],
     jobTitle: jsonld.jobTitle,
-    image: `${SITE_URL}/imgs/profile-photo.png`,
+    image: `${SITE_URL}${PHOTO.src}`,
     sameAs: [GITHUB_URL],
-    knowsAbout: ["React", "Next.js", "TypeScript", "Node.js"],
+    knowsAbout: STACK,
   };
 
-  // Só "encaixa no pane" (D5): o conteúdo da home é o item 4.
+  // A home é o arquivo home.tsx (item 4): o tamanho da fonte e a coluna de
+  // preview seguem a largura do pane (@container), não a do viewport.
   return (
-    <EditorPane
-      file={EDITOR_FILES.home}
-      gutter="none"
-      // Abaixo de lg o arquivo começa no topo (guia §1); a linha texto + foto só ≥1024,
-      // onde o pane (viewport − explorer 240px) comporta as duas colunas.
-      bodyClassName="flex flex-col gap-10 py-6 lg:flex-row lg:items-center lg:justify-center"
-    >
+    <EditorPane file={EDITOR_FILES.home}>
       <JsonLd data={personJsonLd} />
-      <div className="flex min-w-0 flex-col gap-8 text-foreground">
-        <div className="min-w-0">
-          <p className="text-lg">{home.greeting}</p>
-          <h1 className="text-5xl font-bold tracking-tight break-words sm:text-6xl lg:text-7xl">
-            {home.name}
-          </h1>
-          <h2 className="text-base text-syntax-keyword lg:text-3xl">
-            {home.role}
-          </h2>
-        </div>
-
-        <div className="min-w-0 text-sm lg:text-base">
-          <p className="text-syntax-comment">{home.githubComment}</p>
-          <p>
-            <Token kind="keyword">const</Token>{" "}
-            <Token kind="name">{home.githubVar}</Token>
-            {" = "}
+      <div className="@container flex min-h-full">
+        {/* `[&_*]`: span/a/h1 têm font-size fixo no @layer base; aqui herdam da linha.
+            counter-reset: o @container tem contenção de estilo, que isola o
+            contador `line` do .editor-body; o gutter reinicia aqui dentro. */}
+        <div className="min-w-0 flex-1 pr-6 [counter-reset:line] text-sm leading-6 @lg:text-base @lg:leading-7 @3xl:text-lg @3xl:leading-8 [&_*]:text-[length:inherit]">
+          <CodeLine kind="comment" wrap>
+            {home.siteComment}
+          </CodeLine>
+          <CodeLine wrap>
+            <Token kind="keyword">import</Token> <Token kind="name">photo</Token>{" "}
+            <Token kind="keyword">from</Token>{" "}
+            <Token kind="string">&quot;./profile-photo.png&quot;</Token>;
+            {/* Decoração de editor no pane estreito; a foto "de verdade" é o preview. */}
+            <Image
+              src={PHOTO.src}
+              width={19}
+              height={22}
+              alt=""
+              aria-hidden="true"
+              sizes="22px"
+              loading="lazy"
+              className="ml-3 inline-block h-[1.25em] w-auto align-[-0.25em] @5xl:hidden"
+            />
+          </CodeLine>
+          <CodeLine wrap />
+          <CodeLine kind="comment" wrap>
+            {home.greeting}
+          </CodeLine>
+          <CodeLine wrap>
+            <Token kind="keyword">const</Token> <Token kind="name">developer</Token> ={" "}
+            {"{"}
+          </CodeLine>
+          <CodeLine indent={1} wrap>
+            name: <Token kind="string">&quot;</Token>
+            <h1 className="inline font-bold text-syntax-string">{AUTHOR}</h1>
+            <Token kind="string">&quot;</Token>,
+          </CodeLine>
+          <CodeLine indent={1} wrap>
+            role: <Token kind="string">&quot;{home.role}&quot;</Token>,
+          </CodeLine>
+          <CodeLine indent={1} wrap>
+            stack: [
+            {STACK.map((tech, index) => (
+              <span key={tech}>
+                {index > 0 && ", "}
+                <Token kind="string">&quot;{tech}&quot;</Token>
+              </span>
+            ))}
+            ],
+          </CodeLine>
+          <CodeLine indent={1} wrap>
+            github: <Token kind="string">&quot;</Token>
             <a
               href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-syntax-string break-all hover:underline focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
+              className="rounded-sm text-syntax-string underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
-              {`"${GITHUB_URL}"`}
+              {GITHUB_URL}
+              <span className="sr-only">{home.newTab}</span>
             </a>
-          </p>
+            <Token kind="string">&quot;</Token>,
+          </CodeLine>
+          <CodeLine indent={1} wrap>
+            <Token kind="name">photo</Token>,
+          </CodeLine>
+          <CodeLine wrap>{"};"}</CodeLine>
+          <CodeLine wrap />
+          <CodeLine current wrap>
+            <Token kind="keyword">export</Token> <Token kind="keyword">default</Token>{" "}
+            <Token kind="name">developer</Token>;
+            <span
+              aria-hidden="true"
+              className="ml-px inline-block h-[1.15em] w-[2px] translate-y-[0.15em] animate-cursor-blink bg-syntax-active motion-reduce:animate-none"
+            />
+          </CodeLine>
         </div>
-      </div>
 
-      <div className="hidden min-w-0 lg:block lg:max-w-[40%]">
-        <Image
-          src={"/imgs/profile-photo.png"}
-          width={500}
-          height={593}
-          alt={AUTHOR}
-          priority
-          fetchPriority="high"
-          sizes="(min-width: 1024px) 40vw, 0px"
-          className="h-auto w-full"
-        />
+        {/* Pane largo: preview da imagem importada, como no VS Code. */}
+        <aside
+          aria-label={home.previewLabel}
+          className="hidden w-[300px] shrink-0 flex-col border-l border-border @5xl:flex"
+        >
+          <div className="flex h-7 shrink-0 items-center gap-1.5 border-b border-border px-4 text-xs text-muted-foreground">
+            <ImageIcon size={12} aria-hidden="true" />
+            <span className="text-xs">profile-photo.png</span>
+            <span className="text-xs">
+              · {PHOTO.width} × {PHOTO.height}
+            </span>
+          </div>
+          <div className="flex flex-1 items-center justify-center p-6">
+            <Image
+              src={PHOTO.src}
+              width={PHOTO.width}
+              height={PHOTO.height}
+              alt={AUTHOR}
+              sizes="240px"
+              loading="lazy"
+              className="h-auto w-full max-w-60"
+            />
+          </div>
+        </aside>
       </div>
     </EditorPane>
   );

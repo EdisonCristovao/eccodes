@@ -47,7 +47,7 @@
   --ring: #fea55f; /* orange-light — foco e aba ativa */
 
   --chart-1: #43d9ad;
-  --chart-2: #4d5bce;
+  --chart-2: #7c88dd;
   --chart-3: #fea55f;
   --chart-4: #e99287;
   --chart-5: #607b96;
@@ -70,7 +70,7 @@
   --color-primary-light-dark: #011221;
   --color-primary-dark: #01080e;
   --color-secondary-grey: #6f8ba8; /* alias legado de --muted-foreground (item 23 remove) */
-  --color-secondary-blue: #4d5bce;
+  --color-secondary-blue: #7c88dd;
   --color-accent-green: #43d9ad;
   --color-accent-nude: #e99287;
   --color-lines: #1e2d3d;
@@ -79,7 +79,7 @@
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* Tokens de sintaxe (guia §2.2): keyword, name, string, active, comment, punct */
-  --color-syntax-keyword: #4d5bce;
+  --color-syntax-keyword: #7c88dd;
   --color-syntax-name: #43d9ad;
   --color-syntax-string: #e99287;
   --color-syntax-active: #fea55f;
@@ -225,6 +225,21 @@
 */
 .editor-body {
   counter-reset: line;
+  /* tema do shiki (createCssVariablesTheme) apontando para os tokens syntax-* */
+  --shiki-foreground: var(--color-syntax-punct);
+  --shiki-background: transparent;
+  --shiki-token-keyword: var(--color-syntax-keyword);
+  --shiki-token-comment: var(--color-syntax-comment);
+  --shiki-token-string: var(--color-syntax-string);
+  --shiki-token-string-expression: var(--color-syntax-string);
+  --shiki-token-link: var(--color-syntax-string);
+  --shiki-token-function: var(--color-syntax-name);
+  --shiki-token-constant: var(--color-syntax-active);
+  --shiki-token-parameter: var(--color-syntax-punct);
+  --shiki-token-punctuation: var(--color-syntax-punct);
+  --shiki-token-inserted: var(--color-syntax-name);
+  --shiki-token-deleted: var(--color-syntax-string);
+  --shiki-token-changed: var(--color-syntax-active);
 }
 .editor-body .line {
   display: flex;
@@ -255,10 +270,6 @@
 .editor-body .line[data-unnumbered]::before {
   content: "";
   counter-increment: none;
-}
-.editor-body .shiki {
-  background: transparent !important;
-  padding: 0;
 }
 .editor-body .shiki code {
   display: block;

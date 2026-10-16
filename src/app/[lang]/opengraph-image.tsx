@@ -29,8 +29,8 @@ export async function generateImageMetadata({
 const color = {
   bg: "#011627",
   lines: "#1E2D3D",
-  grey: "#607B96",
-  blue: "#4D5BCE",
+  grey: "#6F8BA8",
+  blue: "#7C88DD",
   green: "#43D9AD",
   nude: "#E99287",
   orange: "#FEA55F",

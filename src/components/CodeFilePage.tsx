@@ -1,31 +1,11 @@
-import shiki, { type Highlighter } from "shiki";
 import CodePreview from "@/components/CodePreview";
 import EditorNotice from "@/components/EditorNotice";
 import EditorPane from "@/components/editor/EditorPane";
 import { ui } from "@/dictionaries/ui";
 import { EDITOR_FILES } from "@/lib/editor-files";
 import { FILES, resolveContent, type ContentSlug } from "@/lib/files";
+import { highlight } from "@/lib/highlighter";
 import { HTML_LANG, fill, type Locale } from "@/lib/i18n";
-
-// Um highlighter por processo: carregar o tema a cada render custa ~100ms.
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-function getHighlighter(): Promise<Highlighter> {
-  highlighterPromise ??= shiki.getHighlighter({ theme: "dracula" });
-  return highlighterPromise;
-}
-
-/**
- * Cada `span.line` do shiki vira um flex (gutter por ::before); embrulha o
- * conteúdo da linha num span único com `whitespace-pre` para o flex não
- * engolir os espaços entre tokens.
- */
-function wrapLines(html: string): string {
-  return html.replace(
-    /<span class="line">([\s\S]*?)<\/span>(?=\n|<\/code>)/g,
-    '<span class="line"><span class="min-w-0 whitespace-pre">$1</span></span>',
-  );
-}
 
 type CodeFilePageProps = {
   slug: ContentSlug;
@@ -53,8 +33,7 @@ export default async function CodeFilePage({ slug, lang }: CodeFilePageProps) {
     );
   }
 
-  const highlighter = await getHighlighter();
-  const html = wrapLines(highlighter.codeToHtml(content.code, { lang: file.lang }));
+  const html = await highlight(content.code, file.lang);
 
   return (
     <EditorPane

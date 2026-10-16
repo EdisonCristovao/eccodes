@@ -8,11 +8,11 @@ import type { Locale } from "@/lib/i18n";
  */
 const en = {
   home: {
-    greeting: "Hi all, I am",
-    name: "Edison Cristovão",
-    role: "> Full-stack developer",
-    githubComment: "// you can also see it on my Github",
-    githubVar: "githubLink",
+    siteComment: "// edison.cristovao.codes",
+    greeting: "// Hi all, I am",
+    role: "Full-stack developer",
+    newTab: " (opens in a new tab)",
+    previewLabel: "profile-photo.png preview",
   },
   about: {
     title: "Explore My Profile!",
@@ -84,11 +84,11 @@ export type PagesDictionary = typeof en;
 
 const pt = {
   home: {
-    greeting: "Olá, eu sou",
-    name: "Edison Cristovão",
-    role: "> Desenvolvedor full-stack",
-    githubComment: "// você também pode me encontrar no GitHub",
-    githubVar: "githubLink",
+    siteComment: "// edison.cristovao.codes",
+    greeting: "// Olá, eu sou",
+    role: "Desenvolvedor full-stack",
+    newTab: " (abre em nova aba)",
+    previewLabel: "pré-visualização de profile-photo.png",
   },
   about: {
     title: "Explore meu perfil!",
