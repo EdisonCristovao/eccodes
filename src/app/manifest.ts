@@ -6,6 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     name: `${SITE_NAME} — ${AUTHOR}`,
     short_name: SITE_NAME,
     description: DEFAULT_DESCRIPTION,
+    // Um manifest por site, em inglês (D8); o proxy manda "/" para o idioma certo.
+    lang: "en",
     start_url: "/",
     display: "standalone",
     background_color: "#011627",

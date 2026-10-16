@@ -1,21 +1,25 @@
 import type { ComponentProps } from "react";
 import NextLink from "next/link";
 import { cn } from "@/lib/utils";
+import { localizedPath, type Locale } from "@/lib/i18n";
+import { ui } from "@/dictionaries/ui";
 
 // Aceita as props do link (onClick, ref…) para funcionar como filho de
 // `SheetClose asChild` no menu mobile.
-type LogoProps = Omit<ComponentProps<typeof NextLink>, "href" | "children">;
+type LogoProps = Omit<ComponentProps<typeof NextLink>, "href" | "children"> & {
+  lang: Locale;
+};
 
 /**
  * Wordmark "EC.c" — o nome do site como um arquivo C aberto no editor.
  * HTML real com a Fira Code do next/font (sem imagem, sem CLS).
  */
-export default function Logo({ className, ...props }: LogoProps) {
+export default function Logo({ className, lang, ...props }: LogoProps) {
   return (
     <NextLink
       {...props}
-      href="/"
-      aria-label="EC.c — home"
+      href={localizedPath(lang, "/")}
+      aria-label={ui[lang].nav.logo}
       className={cn(
         "group flex h-full items-center border-r border-border px-6 text-base font-bold tracking-tight text-foreground",
         "hover:bg-card active:bg-primary-dark focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",

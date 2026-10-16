@@ -1,24 +1,29 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
 import MobileMenu from "./MobileMenu";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { ui } from "@/dictionaries/ui";
 import { NAV_LINKS, isActivePath } from "@/lib/navigation";
+import { DEFAULT_LOCALE, hasLocale, localizedPath } from "@/lib/i18n";
 
 export default function Nav() {
   const pathname = usePathname();
+  const params = useParams<{ lang: string }>();
+  const lang = hasLocale(params.lang) ? params.lang : DEFAULT_LOCALE;
 
   return (
     <header className="flex h-14 w-full items-center justify-between border border-border bg-background text-muted-foreground md:justify-start">
-      <Logo />
+      <Logo lang={lang} />
 
-      <nav aria-label="Main" className="hidden h-full md:flex">
+      <nav aria-label={ui[lang].nav.main} className="hidden h-full md:flex">
         <ul className="flex h-full">
           {NAV_LINKS.map((link) => (
             <li key={link.href} className="flex h-full">
               <NavLink
-                href={link.href}
+                href={localizedPath(lang, link.href)}
                 label={link.label}
                 active={isActivePath(pathname, link.href)}
               />
@@ -27,7 +32,10 @@ export default function Nav() {
         </ul>
       </nav>
 
-      <MobileMenu pathname={pathname} />
+      {/* Provisório: vai para a status bar no item 20. */}
+      <LanguageSwitcher lang={lang} variant="nav" />
+
+      <MobileMenu pathname={pathname} lang={lang} />
     </header>
   );
 }

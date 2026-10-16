@@ -1,11 +1,16 @@
+import { stripLocale } from "@/lib/i18n";
+
+/** Caminhos lógicos (sem prefixo de idioma); o prefixo entra na renderização via `localizedPath`. */
 export const NAV_LINKS = [
   { label: "_home", href: "/" },
   { label: "_about-me", href: "/editor" },
   { label: "_projects", href: "/projects" },
 ] as const;
 
+/** Compara um pathname real ("/pt/editor/bio") com um caminho lógico ("/editor"). */
 export function isActivePath(pathname: string, href: string): boolean {
+  const path = stripLocale(pathname);
   return href === "/"
-    ? pathname === "/"
-    : pathname === href || pathname.startsWith(href + "/");
+    ? path === "/"
+    : path === href || path.startsWith(href + "/");
 }

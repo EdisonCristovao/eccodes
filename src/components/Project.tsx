@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import { Button } from "@/components/ui/button";
 
 type ProjectProps = {
@@ -7,16 +6,18 @@ type ProjectProps = {
   img: string;
   description: string;
   buttonText: string;
-  buttonClick?(): () => void;
+  /** Destino do botão; sem URL o botão fica sem ação (item 8). */
+  url?: string;
   /** Imagem LCP (primeiro card): carrega com prioridade alta. */
   priority?: boolean;
 };
+
 export default function Project({
   name,
   img,
   description,
   buttonText,
-  buttonClick,
+  url,
   priority = false,
 }: ProjectProps) {
   return (
@@ -35,7 +36,15 @@ export default function Project({
         </div>
         <div className="p-6 flex flex-col items-start ">
           <p className="mb-3 text-base">{description}</p>
-          <Button onClick={buttonClick}>{buttonText}</Button>
+          {url ? (
+            <Button asChild>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {buttonText}
+              </a>
+            </Button>
+          ) : (
+            <Button type="button">{buttonText}</Button>
+          )}
         </div>
       </div>
     </div>

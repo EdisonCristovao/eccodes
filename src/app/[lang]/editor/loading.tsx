@@ -1,3 +1,8 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import { ui } from "@/dictionaries/ui";
+import { DEFAULT_LOCALE, hasLocale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 // Larguras e indentação de 10 linhas "de código", para o skeleton parecer um arquivo.
@@ -14,7 +19,12 @@ const SKELETON_LINES = [
   { width: "w-5/12", indent: "" },
 ];
 
+// Client component: é usado como fallback do Suspense no template (client) e
+// precisa do idioma da rota via useParams.
 export default function Loading() {
+  const params = useParams<{ lang?: string }>();
+  const lang = hasLocale(params?.lang) ? params.lang : DEFAULT_LOCALE;
+
   return (
     <div
       role="status"
@@ -22,7 +32,7 @@ export default function Loading() {
       aria-busy="true"
       className="px-6 py-4 text-sm leading-relaxed"
     >
-      <span className="sr-only">Opening file…</span>
+      <span className="sr-only">{ui[lang].file.opening}</span>
       <ol aria-hidden="true" className="animate-pulse motion-reduce:animate-none">
         {SKELETON_LINES.map(({ width, indent }, index) => (
           <li key={index} className="flex h-6 items-center gap-4">

@@ -1,12 +1,30 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { pages } from "@/dictionaries/pages";
+import { LOCALES, type Locale } from "@/lib/i18n";
+import { localeFromParams } from "@/lib/site";
 
-// OG image 1200×630 (uma para o site todo): janela de editor com a aba "EC.c",
-// gutter numerado, código colorido e o wordmark no canto inferior direito.
-export const alt = "EC.c — Edison Cristovão, Full-stack developer";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+// OG image 1200×630: janela de editor com a aba "EC.c", gutter numerado,
+// código colorido e o wordmark no canto inferior direito. Um PNG por idioma
+// (mesmo layout; `role` e `alt` do dicionário), prerenderizado.
+export function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
+const size = { width: 1200, height: 630 };
+const contentType = "image/png";
+
+// `alt` por idioma só é possível via generateImageMetadata (o export `alt`
+// é estático). O id entra na URL: /<lang>/opengraph-image/editor.
+export async function generateImageMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }> | { lang: string };
+}) {
+  const lang = await localeFromParams(Promise.resolve(params));
+  return [{ id: "editor", alt: pages[lang].og.alt, size, contentType }];
+}
 
 const color = {
   bg: "#011627",
@@ -24,7 +42,7 @@ const CODE_SIZE = 34;
 const LINE_HEIGHT = CODE_SIZE * 1.6;
 
 type Token = { text: string; color: string };
-const lines: Token[][] = [
+const codeLines = (lang: Locale): Token[][] => [
   [{ text: "// edison.cristovao.codes", color: color.grey }],
   [
     { text: "const ", color: color.blue },
@@ -38,7 +56,7 @@ const lines: Token[][] = [
   ],
   [
     { text: "  role: ", color: color.white },
-    { text: '"Full-stack developer"', color: color.nude },
+    { text: `"${pages[lang].og.role}"`, color: color.nude },
     { text: ",", color: color.white },
   ],
   [{ text: "};", color: color.white }],
@@ -57,7 +75,13 @@ async function loadFonts() {
   ];
 }
 
-export default async function OpenGraphImage() {
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const lang = await localeFromParams(params);
+  const lines = codeLines(lang);
   const fonts = await loadFonts();
 
   return new ImageResponse(
