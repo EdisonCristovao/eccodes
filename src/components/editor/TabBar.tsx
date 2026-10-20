@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import CommandPaletteTrigger from "@/components/command/CommandPaletteTrigger";
 import ExplorerDrawer from "@/components/explorer/ExplorerDrawer";
 import Tab from "@/components/editor/Tab";
 import { ui } from "@/dictionaries/ui";
@@ -152,6 +153,7 @@ export default function TabBar() {
           );
         })}
       </ul>
+      <CommandPaletteTrigger lang={lang} />
     </nav>
   );
 }

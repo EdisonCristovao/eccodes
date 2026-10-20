@@ -17,6 +17,11 @@ export const HREFLANG: Record<Locale, string> = { en: "en", pt: "pt-BR" };
 export const LANG_COOKIE = "lang";
 export const LANG_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
+/** Grava a escolha de idioma no cookie `lang` (só no cliente). */
+export function rememberLocale(to: Locale): void {
+  document.cookie = `${LANG_COOKIE}=${to}; path=/; max-age=${LANG_COOKIE_MAX_AGE}; SameSite=Lax`;
+}
+
 export const hasLocale = (value: string | undefined | null): value is Locale =>
   typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 

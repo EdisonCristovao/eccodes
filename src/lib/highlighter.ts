@@ -1,9 +1,11 @@
+import "server-only";
 import {
   createCssVariablesTheme,
-  createHighlighter,
-  type Highlighter,
+  createHighlighterCore,
+  type HighlighterCore,
   type ShikiTransformer,
-} from "shiki";
+} from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
 /**
  * Tema por variáveis CSS: cada token sai como `color: var(--shiki-token-*)`
@@ -129,12 +131,15 @@ const noTabStop: ShikiTransformer = {
 };
 
 // Um highlighter por processo: carregar tema e gramáticas a cada render custa ~100ms.
-let highlighterPromise: Promise<Highlighter> | null = null;
+// Núcleo enxuto (item 13): só as 2 gramáticas usadas e o motor de regex em JS,
+// sem o bundle completo de linguagens nem o WASM do Oniguruma.
+let highlighterPromise: Promise<HighlighterCore> | null = null;
 
-function getHighlighter(): Promise<Highlighter> {
-  highlighterPromise ??= createHighlighter({
+function getHighlighter(): Promise<HighlighterCore> {
+  highlighterPromise ??= createHighlighterCore({
     themes: [theme],
-    langs: ["javascript", "markdown"],
+    langs: [import("shiki/langs/javascript.mjs"), import("shiki/langs/markdown.mjs")],
+    engine: createJavaScriptRegexEngine(),
   });
   return highlighterPromise;
 }

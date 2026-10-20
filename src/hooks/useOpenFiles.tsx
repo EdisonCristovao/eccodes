@@ -20,6 +20,10 @@ export type OpenFilesContextValue = {
   open: (slug: FileSlug) => void;
   /** Remove a aba (quem navega para a vizinha é a TabBar). */
   close: (slug: FileSlug) => void;
+  /** Fecha todas as abas menos `keep`. */
+  closeOthers: (keep: FileSlug) => void;
+  /** Fecha todas (quem reabre/navega para a home é quem chama). */
+  closeAll: () => void;
 };
 
 /*
@@ -90,6 +94,12 @@ const store = {
     if (!state.includes(slug)) return;
     setState(state.filter((open) => open !== slug));
   },
+  closeOthers(keep: FileSlug) {
+    setState([keep]);
+  },
+  closeAll() {
+    setState([]);
+  },
 };
 
 // Snapshot "só a rota", com referência estável por slug (exigência do
@@ -129,7 +139,13 @@ export function OpenFilesProvider({ children }: { children: React.ReactNode }) {
   }, [routeSlug]);
 
   const value = useMemo<OpenFilesContextValue>(
-    () => ({ openFiles, open: store.open, close: store.close }),
+    () => ({
+      openFiles,
+      open: store.open,
+      close: store.close,
+      closeOthers: store.closeOthers,
+      closeAll: store.closeAll,
+    }),
     [openFiles],
   );
 

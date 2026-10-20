@@ -7,9 +7,8 @@ import { Languages } from "lucide-react";
 import { ui } from "@/dictionaries/ui";
 import {
   HREFLANG,
-  LANG_COOKIE,
-  LANG_COOKIE_MAX_AGE,
   LOCALES,
+  rememberLocale,
   swapLocale,
   type Locale,
 } from "@/lib/i18n";
@@ -21,10 +20,6 @@ type LanguageSwitcherProps = {
 };
 
 const SHORT: Record<Locale, string> = { en: "EN", pt: "PT" };
-
-function rememberLocale(to: Locale) {
-  document.cookie = `${LANG_COOKIE}=${to}; path=/; max-age=${LANG_COOKIE_MAX_AGE}; SameSite=Lax`;
-}
 
 type LinksProps = { lang: Locale; query: string };
 

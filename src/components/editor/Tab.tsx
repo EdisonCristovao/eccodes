@@ -79,13 +79,17 @@ export default function Tab({
           data-active={active}
           onClick={onClose}
           className={cn(
-            "relative mr-2 flex size-5 shrink-0 items-center justify-center self-center rounded-sm text-muted-foreground transition-opacity duration-150 hover:bg-accent hover:text-foreground focus-visible:opacity-100 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none",
+            // Alvo de 24×24 (WCAG 2.2 target-size); o × visível continua com
+            // 20×20 no span de dentro, centrado no mesmo ponto (mr-1.5 + 12 = mr-2 + 10).
+            "group/close relative mr-1.5 flex size-6 shrink-0 items-center justify-center self-center text-muted-foreground outline-none transition-opacity duration-150 hover:text-foreground focus-visible:opacity-100 motion-reduce:transition-none",
             // Mobile: área de toque 44×36 via pseudo-elemento; desktop: só no hover/foco ou na aba ativa.
-            "before:absolute before:-inset-x-3 before:-inset-y-2 before:content-[''] md:before:hidden",
+            "before:absolute before:-inset-x-2.5 before:-inset-y-1.5 before:content-[''] md:before:hidden",
             "md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 md:data-[active=true]:opacity-100",
           )}
         >
-          <X className="size-3.5" aria-hidden="true" />
+          <span className="flex size-5 items-center justify-center rounded-sm group-hover/close:bg-accent group-focus-visible/close:outline-2 group-focus-visible/close:-outline-offset-2 group-focus-visible/close:outline-ring">
+            <X className="size-3.5" aria-hidden="true" />
+          </span>
         </button>
       )}
     </li>

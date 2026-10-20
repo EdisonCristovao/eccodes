@@ -78,6 +78,46 @@ const en = {
   pane: {
     breadcrumbRoot: "src",
   },
+  palette: {
+    title: "Command palette",
+    description: "Search files, commands and links",
+    placeholder: "Search files by name (type > for commands)",
+    trigger: "Go to file…",
+    // O texto visível ("Go to file… ⌘K") precisa estar contido no nome (WCAG 2.5.3).
+    triggerAria: "Go to file… {shortcut} — command palette",
+    groups: {
+      files: "Files",
+      commands: "Commands",
+      links: "Links",
+    },
+    empty: '// no results for "{query}"',
+    current: "current",
+    open: "open",
+    hints: "↑↓ to navigate · ↵ to open · esc to close",
+    cancel: "Cancel",
+    commands: {
+      language: "Language:",
+      switchTo: "Switch to {name}",
+      tabs: "Tabs:",
+      closeOthers: "Close other tabs",
+      closeAll: "Close all tabs",
+    },
+    links: {
+      github: "Open GitHub profile",
+      linkedin: "Open LinkedIn profile",
+      email: "Send an e-mail",
+      whatsapp: "Message on WhatsApp",
+    },
+    /** Termos extras de busca por arquivo (os dois idiomas entram na busca). */
+    keywords: {
+      home: ["Home"],
+      about: ["About me"],
+      bio: ["Bio"],
+      terminal: ["Terminal"],
+      others: ["Dev setup"],
+      projects: ["Experience"],
+    },
+  },
   notFound: {
     file: "404.md",
     lines: ["// 404: file not found", "// the path {path} does not exist"],
@@ -158,6 +198,44 @@ const pt = {
   },
   pane: {
     breadcrumbRoot: "src",
+  },
+  palette: {
+    title: "Paleta de comandos",
+    description: "Busque arquivos, comandos e links",
+    placeholder: "Buscar arquivos pelo nome (digite > para comandos)",
+    trigger: "Ir para arquivo…",
+    triggerAria: "Ir para arquivo… {shortcut} — paleta de comandos",
+    groups: {
+      files: "Arquivos",
+      commands: "Comandos",
+      links: "Links",
+    },
+    empty: '// nenhum resultado para "{query}"',
+    current: "atual",
+    open: "aberto",
+    hints: "↑↓ para navegar · ↵ para abrir · esc para fechar",
+    cancel: "Cancelar",
+    commands: {
+      language: "Idioma:",
+      switchTo: "mudar para {name}",
+      tabs: "Abas:",
+      closeOthers: "fechar as outras abas",
+      closeAll: "fechar todas as abas",
+    },
+    links: {
+      github: "Abrir perfil no GitHub",
+      linkedin: "Abrir perfil no LinkedIn",
+      email: "Enviar um e-mail",
+      whatsapp: "Conversar no WhatsApp",
+    },
+    keywords: {
+      home: ["Início"],
+      about: ["Sobre mim"],
+      bio: ["Bio"],
+      terminal: ["Terminal"],
+      others: ["Setup"],
+      projects: ["Experiência"],
+    },
   },
   notFound: {
     file: "404.md",
