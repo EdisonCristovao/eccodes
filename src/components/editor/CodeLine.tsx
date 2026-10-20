@@ -35,8 +35,9 @@ const WRAP_INDENT: Record<NonNullable<CodeLineProps["indent"]>, string> = {
 
 /**
  * Uma linha do EditorPane: `.line` recebe o número pelo contador CSS do
- * `.editor-body` (globals.css). O conteúdo fica num span único para o flex
- * não engolir os espaços.
+ * `.editor-body` (globals.css) e o tamanho da escala do pane (`text-pane`).
+ * O conteúdo fica num bloco único para o flex não engolir os espaços (div,
+ * não span: a home e o /projects põem h1/h2 dentro).
  */
 export default function CodeLine({
   kind = "code",
@@ -49,11 +50,15 @@ export default function CodeLine({
 }: CodeLineProps) {
   return (
     <div
-      className={cn("line", kind === "comment" && "text-syntax-comment", className)}
+      className={cn(
+        "line text-pane",
+        kind === "comment" && "text-syntax-comment",
+        className,
+      )}
       data-unnumbered={numbered ? undefined : ""}
       data-current={current ? "" : undefined}
     >
-      <span
+      <div
         className={cn(
           "min-w-0",
           kind === "prose"
@@ -65,7 +70,7 @@ export default function CodeLine({
         )}
       >
         {children}
-      </span>
+      </div>
     </div>
   );
 }

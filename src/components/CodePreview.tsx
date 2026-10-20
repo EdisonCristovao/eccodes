@@ -12,7 +12,7 @@ type CodePreviewProps = {
 export default function CodePreview({ html, lang }: CodePreviewProps) {
   return (
     <div
-      className="min-w-0"
+      className="min-w-0 text-pane"
       lang={lang}
       dangerouslySetInnerHTML={{ __html: html }}
     />

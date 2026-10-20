@@ -27,14 +27,16 @@ export function File({ icon, inDrawer, className, children, ...props }: FileProp
         data-active={isCurrentActive}
         aria-current={isCurrentActive ? "page" : undefined}
         className={cn(
-          "flex items-center gap-2 border-l-2 border-l-transparent pr-4 pl-6 text-editor text-muted-foreground hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-[active=true]:border-l-ring data-[active=true]:bg-accent data-[active=true]:text-foreground",
+          "flex items-center gap-2 border-l-2 border-l-transparent pr-4 pl-6 text-muted-foreground hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-[active=true]:border-l-ring data-[active=true]:bg-accent data-[active=true]:text-foreground",
           inDrawer ? "min-h-11" : "h-7",
           className,
         )}
         {...props}
       >
         {icon}
-        <span className="min-w-0 flex-1 truncate">{children}</span>
+        {/* text-editor aqui, fora do cn(): o cn@0.4.0 trata `text-editor` como cor
+            e o descarta ao lado de `text-muted-foreground`. */}
+        <span className="min-w-0 flex-1 truncate text-editor">{children}</span>
       </Link>
     </li>
   );

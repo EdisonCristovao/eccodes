@@ -19,7 +19,6 @@ export type CodeFile = {
   name: string;
   /** Linguagem do shiki (do registro). */
   lang: "js" | "md";
-  description: string;
   /**
    * Conteúdo por idioma, lido de `src/content/`. `en` é obrigatório; sem
    * versão no idioma pedido, `resolveContent` cai no inglês e avisa.
@@ -33,11 +32,7 @@ const load =
   () =>
     readFile(join(CONTENT_DIR, name), "utf8");
 
-function define(
-  slug: ContentSlug,
-  description: string,
-  content: CodeFile["content"],
-): CodeFile {
+function define(slug: ContentSlug, content: CodeFile["content"]): CodeFile {
   const file = EDITOR_FILES[slug];
   return {
     slug,
@@ -45,34 +40,17 @@ function define(
     name: file.name,
     // Todos os arquivos de conteúdo têm `shiki` no registro.
     lang: file.shiki ?? "md",
-    description,
     content,
   };
 }
 
 /** Loaders de conteúdo dos arquivos do editor (só servidor). */
 export const FILES: Record<ContentSlug, CodeFile> = {
-  about: define(
-    "about",
-    "About Edison Cristovão: mobile and full-stack developer with 10+ years of experience, currently at TED and open to remote roles.",
-    { en: load("about.md"), pt: load("about.pt.md") },
-  ),
-  bio: define(
-    "bio",
-    "Edison Cristovão's bio as a code file: background, stack and what he's working on.",
-    { en: load("bio.js"), pt: load("bio.pt.js") },
-  ),
-  terminal: define(
-    "terminal",
-    "Edison Cristovão's terminal setup: shell, prompt and tools.",
-    // Só comandos/links: um arquivo para os dois idiomas (aviso de fallback em PT).
-    { en: load("terminal.md") },
-  ),
-  others: define(
-    "others",
-    "Edison Cristovão's dev setup: editor, extensions, fonts and configs.",
-    { en: load("others.md") },
-  ),
+  about: define("about", { en: load("about.md"), pt: load("about.pt.md") }),
+  bio: define("bio", { en: load("bio.js"), pt: load("bio.pt.js") }),
+  // Só comandos/links: um arquivo para os dois idiomas (aviso de fallback em PT).
+  terminal: define("terminal", { en: load("terminal.md") }),
+  others: define("others", { en: load("others.md") }),
 };
 
 export type ResolvedContent = {

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { Command as CommandPrimitive } from "cmdk"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 import {
   Dialog,
@@ -38,14 +38,12 @@ function CommandDialog({
   description,
   children,
   className,
-  showCloseButton = false,
   onCloseAutoFocus,
   ...props
 }: React.ComponentProps<typeof Dialog> & {
   title: string
   description: string
   className?: string
-  showCloseButton?: boolean
   onCloseAutoFocus?: React.ComponentProps<
     typeof DialogContent
   >["onCloseAutoFocus"]
@@ -54,7 +52,6 @@ function CommandDialog({
     <Dialog {...props}>
       <DialogContent
         className={cn("overflow-hidden p-0", className)}
-        showCloseButton={showCloseButton}
         onCloseAutoFocus={onCloseAutoFocus}
       >
         <DialogHeader className="sr-only">
@@ -159,9 +156,6 @@ function CommandSeparator({
 }
 
 /**
- * Os spans internos herdam o tamanho do item (a base do globals.css põe
- * `span { 18px }`); o CommandShortcut mantém o text-xs.
- *
  * Item: muted no repouso; o ativo (`data-selected`) fica `bg-accent` +
  * `text-foreground` com a borda laranja à esquerda (sombra inset, sem mudar
  * a largura), como o item ativo do explorer. Muted sobre accent é proibido
@@ -175,7 +169,7 @@ function CommandItem({
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "group/command-item relative flex h-11 cursor-default items-center gap-2 px-3 text-editor text-muted-foreground outline-hidden select-none sm:h-9 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-selected:bg-accent data-selected:text-foreground data-selected:shadow-[inset_2px_0_0_var(--color-ring)] [&_span:not([data-slot=command-shortcut])]:text-[length:inherit] [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "group/command-item relative flex h-11 cursor-default items-center gap-2 px-3 text-editor text-muted-foreground outline-hidden select-none sm:h-9 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-selected:bg-accent data-selected:text-foreground data-selected:shadow-[inset_2px_0_0_var(--color-ring)] [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}

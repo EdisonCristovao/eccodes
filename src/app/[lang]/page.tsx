@@ -6,7 +6,7 @@ import Token from "@/components/editor/Token";
 import JsonLd from "@/components/JsonLd";
 import { pages } from "@/dictionaries/pages";
 import { EDITOR_FILES } from "@/lib/editor-files";
-import { HTML_LANG, localizedPath } from "@/lib/i18n";
+import { localizedPath } from "@/lib/i18n";
 import {
   AUTHOR,
   GITHUB_URL,
@@ -47,7 +47,6 @@ export default async function Home({ params }: HomeProps) {
     "@id": `${SITE_URL}/#person`,
     name: AUTHOR,
     url: `${SITE_URL}${localizedPath(lang, "/")}`,
-    inLanguage: HTML_LANG[lang],
     jobTitle: jsonld.jobTitle,
     image: `${SITE_URL}${PHOTO.src}`,
     sameAs: [GITHUB_URL, LINKEDIN_URL],
@@ -59,16 +58,14 @@ export default async function Home({ params }: HomeProps) {
     },
   };
 
-  // A home é o arquivo home.tsx (item 4): o tamanho da fonte e a coluna de
-  // preview seguem a largura do pane (@container), não a do viewport.
+  // A home é o arquivo home.tsx (item 4): o tamanho da fonte (`text-pane` de
+  // cada CodeLine) e a coluna de preview seguem a largura do pane (o PaneBody
+  // é o @container), não a do viewport.
   return (
     <EditorPane file={EDITOR_FILES.home}>
       <JsonLd data={personJsonLd} />
-      <div className="@container flex min-h-full">
-        {/* `[&_*]`: span/a/h1 têm font-size fixo no @layer base; aqui herdam da linha.
-            counter-reset: o @container tem contenção de estilo, que isola o
-            contador `line` do .editor-body; o gutter reinicia aqui dentro. */}
-        <div className="min-w-0 flex-1 pr-6 [counter-reset:line] text-sm leading-6 @lg:text-base @lg:leading-7 @3xl:text-lg @3xl:leading-8 [&_*]:text-[length:inherit]">
+      <div className="flex flex-1">
+        <div className="min-w-0 flex-1 pr-6">
           <CodeLine kind="comment" wrap>
             {home.siteComment}
           </CodeLine>

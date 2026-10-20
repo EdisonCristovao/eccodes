@@ -10,7 +10,7 @@ import {
 } from "react";
 import { Search } from "lucide-react";
 import { ui } from "@/dictionaries/ui";
-import { fill, type Locale } from "@/lib/i18n";
+import type { Locale } from "@/lib/i18n";
 
 // cmdk + Dialog + lista ficam num chunk à parte, baixado só no 1º uso
 // (ou pré-carregado no hover/foco do gatilho). `lazy` em vez de
@@ -124,7 +124,10 @@ export default function CommandPaletteTrigger({
       <button
         ref={triggerRef}
         type="button"
-        aria-label={fill(dict.triggerAria, { shortcut: shortcut ?? "Ctrl K" })}
+        // Sem aria-label: o nome vem do conteúdo (texto visível + kbd + sr-only),
+        // então sempre contém o que se vê (WCAG 2.5.3). Os atalhos vão no
+        // aria-keyshortcuts, estático e igual em qualquer plataforma.
+        aria-keyshortcuts="Meta+K Control+K /"
         aria-haspopup="dialog"
         onPointerEnter={preload}
         onFocus={preload}
@@ -139,12 +142,14 @@ export default function CommandPaletteTrigger({
         className="relative flex h-full w-11 shrink-0 items-center justify-center gap-2 border-l border-border text-editor text-muted-foreground transition-colors duration-150 before:absolute before:inset-x-0 before:-inset-y-1.5 before:content-[''] hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none md:w-auto md:px-3 md:before:hidden"
       >
         <Search className="size-4" aria-hidden="true" />
-        <span className="hidden whitespace-nowrap text-[length:inherit] lg:inline">{dict.trigger}</span>
+        {/* Abaixo de 1024 o texto some só da tela: continua no nome acessível. */}
+        <span className="sr-only whitespace-nowrap text-editor lg:not-sr-only">{dict.trigger}</span>
         {shortcut && (
           <kbd className="hidden rounded-sm border border-border px-1 font-mono text-xs md:inline">
             {shortcut}
           </kbd>
         )}
+        <span className="sr-only">{dict.triggerAria}</span>
       </button>
 
       {requested && (

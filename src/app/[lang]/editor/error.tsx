@@ -35,7 +35,7 @@ export default function EditorError({ error, reset }: ErrorProps) {
             variant="link"
             size="sm"
             onClick={reset}
-            className="h-auto px-0 text-editor"
+            className="h-auto px-0 text-[length:inherit]"
           >
             {dict.tryAgain}
           </Button>

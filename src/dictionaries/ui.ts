@@ -15,11 +15,6 @@ const en = {
     menuTitle: "Navigation menu",
     menuDescription: "Site sections",
     logo: "EC.c — home",
-    links: {
-      home: "_home",
-      aboutMe: "_about-me",
-      projects: "_projects",
-    },
   },
   lang: {
     label: "Language",
@@ -38,7 +33,6 @@ const en = {
     label: "Open files",
     close: "Close {name}",
     opening: "Opening {name}…",
-    unsaved: "{name} — opening",
   },
   explorer: {
     label: "Explorer",
@@ -53,7 +47,6 @@ const en = {
     whatsappAria: "Message Edison on WhatsApp (opens in a new tab)",
     whatsappText:
       "Hi Edison! I found you through your website (edison.cristovao.codes) and I'd like to talk.",
-    opensNewTab: "opens in a new tab",
   },
   file: {
     opening: "Opening file…",
@@ -84,7 +77,7 @@ const en = {
     placeholder: "Search files by name (type > for commands)",
     trigger: "Go to file…",
     // O texto visível ("Go to file… ⌘K") precisa estar contido no nome (WCAG 2.5.3).
-    triggerAria: "Go to file… {shortcut} — command palette",
+    triggerAria: " — command palette",
     groups: {
       files: "Files",
       commands: "Commands",
@@ -136,11 +129,6 @@ const pt = {
     menuTitle: "Menu de navegação",
     menuDescription: "Seções do site",
     logo: "EC.c — início",
-    links: {
-      home: "_home",
-      aboutMe: "_about-me",
-      projects: "_projects",
-    },
   },
   lang: {
     label: "Idioma",
@@ -159,7 +147,6 @@ const pt = {
     label: "Arquivos abertos",
     close: "Fechar {name}",
     opening: "Abrindo {name}…",
-    unsaved: "{name} — abrindo",
   },
   explorer: {
     label: "Explorador",
@@ -174,7 +161,6 @@ const pt = {
     whatsappAria: "Falar com o Edison no WhatsApp (abre em nova aba)",
     whatsappText:
       "Olá, Edison! Encontrei você pelo seu site (edison.cristovao.codes) e gostaria de conversar.",
-    opensNewTab: "abre em nova aba",
   },
   file: {
     opening: "Abrindo arquivo…",
@@ -204,7 +190,7 @@ const pt = {
     description: "Busque arquivos, comandos e links",
     placeholder: "Buscar arquivos pelo nome (digite > para comandos)",
     trigger: "Ir para arquivo…",
-    triggerAria: "Ir para arquivo… {shortcut} — paleta de comandos",
+    triggerAria: " — paleta de comandos",
     groups: {
       files: "Arquivos",
       commands: "Comandos",

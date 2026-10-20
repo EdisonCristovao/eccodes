@@ -34,8 +34,19 @@ const variants = [
 
 const bold = await readFile(join(root, "src/assets/fonts/FiraCode-Bold.woff"));
 
+// O satori emite um <mask id="satori_om-id…"> por elemento, mesmo quando
+// nada o referencia: tira os que não aparecem em nenhum mask="url(#…)".
+function dropUnusedMasks(svg) {
+  const used = new Set(
+    Array.from(svg.matchAll(/mask="url\(#([^)]+)\)"/g), (match) => match[1]),
+  );
+  return svg.replace(/<mask id="([^"]+)">.*?<\/mask>/g, (mask, id) =>
+    used.has(id) ? mask : "",
+  );
+}
+
 for (const { file, background, color } of variants) {
-  const svg = await satori(
+  const raw = await satori(
     {
       type: "div",
       props: {
@@ -76,6 +87,7 @@ for (const { file, background, color } of variants) {
     }
   );
 
+  const svg = dropUnusedMasks(raw);
   const out = join(root, "public/imgs", file);
   await writeFile(out, svg + "\n");
   console.log(`wrote ${out} (${svg.length} bytes)`);

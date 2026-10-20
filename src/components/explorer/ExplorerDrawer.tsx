@@ -51,12 +51,11 @@ export default function ExplorerDrawer() {
 
       <SheetContent
         side="left"
-        showCloseButton={false}
         className="w-[280px] max-w-none gap-0 border-border bg-background p-0 shadow-none"
       >
         <SheetTitle className="sr-only">{dict.label}</SheetTitle>
         <SheetDescription className="sr-only">{dict.files}</SheetDescription>
-        {/* × próprio: o do ui/sheet tem sr-only "Close" fixo em inglês. */}
+        {/* × próprio, numa faixa de 36px como a TabBar, com o rótulo do dicionário. */}
         <div className="flex h-9 shrink-0 items-center justify-end border-b border-border px-1">
           <SheetClose asChild>
             <Button

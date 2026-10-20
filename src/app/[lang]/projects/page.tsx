@@ -64,67 +64,63 @@ export default async function ProjectsPage({ params }: ProjectsProps) {
   const { seo } = pages[lang];
 
   // A experiência (item 8) como um projects.json de verdade: o texto das
-  // linhas é JSON válido. Mesmo wrapper da home (@container + counter-reset).
+  // linhas é JSON válido. Tamanho pelo `text-pane` das CodeLines, como a home.
   return (
     <EditorPane file={EDITOR_FILES.projects}>
       <h1 className="sr-only">{seo.pages.projects.title}</h1>
-      <div className="@container">
-        {/* `[&_*]`: span/h2 têm font-size fixo no @layer base; aqui herdam da linha.
-            counter-reset: o @container isola o contador `line` do .editor-body. */}
-        <div className="min-w-0 pr-6 [counter-reset:line] text-sm leading-6 text-syntax-punct @3xl:text-base @3xl:leading-7 [&_*]:text-[length:inherit]">
-          <CodeLine wrap>{"{"}</CodeLine>
-          <CodeLine indent={1} wrap>
-            <Key name="experience" />[
-          </CodeLine>
-          {EXPERIENCE.map((entry, entryIndex) => {
-            const hasStack = entry.stack.length > 0;
-            return (
-              <Fragment key={entry.id}>
-                <CodeLine indent={2} wrap>
-                  {"{"}
+      <div className="min-w-0 pr-6 text-syntax-punct">
+        <CodeLine wrap>{"{"}</CodeLine>
+        <CodeLine indent={1} wrap>
+          <Key name="experience" />[
+        </CodeLine>
+        {EXPERIENCE.map((entry, entryIndex) => {
+          const hasStack = entry.stack.length > 0;
+          return (
+            <Fragment key={entry.id}>
+              <CodeLine indent={2} wrap>
+                {"{"}
+              </CodeLine>
+              {inlineFields(entry, lang).map((field) => (
+                <CodeLine key={field.key} indent={3} wrap>
+                  <Key name={field.key} />
+                  {field.value},
                 </CodeLine>
-                {inlineFields(entry, lang).map((field) => (
-                  <CodeLine key={field.key} indent={3} wrap>
-                    <Key name={field.key} />
-                    {field.value},
-                  </CodeLine>
-                ))}
+              ))}
+              <CodeLine indent={3} wrap>
+                <Key name="highlights" />[
+              </CodeLine>
+              {entry.highlights.map((highlight, index) => (
+                <CodeLine key={highlight.en} indent={4} wrap>
+                  <Str>{highlight[lang]}</Str>
+                  {comma(index, entry.highlights.length)}
+                </CodeLine>
+              ))}
+              <CodeLine indent={3} wrap>
+                ]{hasStack && ","}
+              </CodeLine>
+              {hasStack && (
                 <CodeLine indent={3} wrap>
-                  <Key name="highlights" />[
+                  <Key name="stack" />[
+                  {entry.stack.map((tech, index) => (
+                    <Fragment key={tech}>
+                      <Str>{tech}</Str>
+                      {index < entry.stack.length - 1 && ", "}
+                    </Fragment>
+                  ))}
+                  ]
                 </CodeLine>
-                {entry.highlights.map((highlight, index) => (
-                  <CodeLine key={highlight.en} indent={4} wrap>
-                    <Str>{highlight[lang]}</Str>
-                    {comma(index, entry.highlights.length)}
-                  </CodeLine>
-                ))}
-                <CodeLine indent={3} wrap>
-                  ]{hasStack && ","}
-                </CodeLine>
-                {hasStack && (
-                  <CodeLine indent={3} wrap>
-                    <Key name="stack" />[
-                    {entry.stack.map((tech, index) => (
-                      <Fragment key={tech}>
-                        <Str>{tech}</Str>
-                        {index < entry.stack.length - 1 && ", "}
-                      </Fragment>
-                    ))}
-                    ]
-                  </CodeLine>
-                )}
-                <CodeLine indent={2} wrap>
-                  {"}"}
-                  {comma(entryIndex, EXPERIENCE.length)}
-                </CodeLine>
-              </Fragment>
-            );
-          })}
-          <CodeLine indent={1} wrap>
-            ]
-          </CodeLine>
-          <CodeLine wrap>{"}"}</CodeLine>
-        </div>
+              )}
+              <CodeLine indent={2} wrap>
+                {"}"}
+                {comma(entryIndex, EXPERIENCE.length)}
+              </CodeLine>
+            </Fragment>
+          );
+        })}
+        <CodeLine indent={1} wrap>
+          ]
+        </CodeLine>
+        <CodeLine wrap>{"}"}</CodeLine>
       </div>
     </EditorPane>
   );

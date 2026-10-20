@@ -7,6 +7,7 @@ import FileIcon from "@/components/editor/FileIcon";
 import { File } from "@/components/explorer/File";
 import { Section } from "@/components/explorer/Section";
 import { ui, whatsappUrl } from "@/dictionaries/ui";
+import { useExplorerSections } from "@/hooks/useExplorerSections";
 import { EDITOR_FILES, EXPLORER_ORDER } from "@/lib/editor-files";
 import { DEFAULT_LOCALE, hasLocale, localizedPath } from "@/lib/i18n";
 import { LINKEDIN_URL } from "@/lib/navigation";
@@ -26,6 +27,12 @@ export default function Explorer({ className, inDrawer = false }: ExplorerProps)
   const params = useParams<{ lang?: string }>();
   const lang = hasLocale(params?.lang) ? params.lang : DEFAULT_LOCALE;
   const dict = ui[lang].explorer;
+  // Desktop: seções lembradas na sessão. Gaveta: sempre Contact fechado, Files aberto.
+  const { sections, setOpen } = useExplorerSections();
+  const sectionProps = (section: "contact" | "files", drawerDefault: boolean) =>
+    inDrawer
+      ? { defaultOpen: drawerDefault }
+      : { open: sections[section], onOpenChange: setOpen(section) };
 
   return (
     <aside
@@ -36,7 +43,7 @@ export default function Explorer({ className, inDrawer = false }: ExplorerProps)
         className,
       )}
     >
-      <Section title={dict.contact} defaultOpen={!inDrawer}>
+      <Section title={dict.contact} {...sectionProps("contact", false)}>
         <File
           href={`mailto:${dict.email}`}
           icon={<Mail size={16} aria-hidden="true" />}
@@ -69,7 +76,7 @@ export default function Explorer({ className, inDrawer = false }: ExplorerProps)
         </File>
       </Section>
 
-      <Section title={dict.files} defaultOpen>
+      <Section title={dict.files} {...sectionProps("files", true)}>
         {EXPLORER_ORDER.map((slug) => {
           const file = EDITOR_FILES[slug];
           return (

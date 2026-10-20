@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 import { Dialog as DialogPrimitive } from "radix-ui"
 
 import { Button } from "@/components/ui/button"
@@ -48,14 +48,21 @@ function DialogOverlay({
   )
 }
 
+/**
+ * Sem texto fixo em inglês: o × padrão só aparece com `showCloseButton` e
+ * exige o rótulo no idioma da página.
+ */
+type CloseButtonProps =
+  | { showCloseButton?: false; closeLabel?: never }
+  | { showCloseButton: true; closeLabel: string }
+
 function DialogContent({
   className,
   children,
-  showCloseButton = true,
+  showCloseButton = false,
+  closeLabel,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean
-}) {
+}: React.ComponentProps<typeof DialogPrimitive.Content> & CloseButtonProps) {
   return (
     <DialogPortal>
       <DialogOverlay />
@@ -79,7 +86,7 @@ function DialogContent({
             >
               <XIcon
               />
-              <span className="sr-only">Close</span>
+              <span className="sr-only">{closeLabel}</span>
             </Button>
           </DialogPrimitive.Close>
         )}
@@ -98,14 +105,8 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function DialogFooter({
-  className,
-  showCloseButton = false,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  showCloseButton?: boolean
-}) {
+/** Sem botão de fechar embutido: quem precisar passa o próprio, com rótulo traduzido. */
+function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-footer"
@@ -114,14 +115,7 @@ function DialogFooter({
         className
       )}
       {...props}
-    >
-      {children}
-      {showCloseButton && (
-        <DialogPrimitive.Close asChild>
-          <Button variant="outline">Close</Button>
-        </DialogPrimitive.Close>
-      )}
-    </div>
+    />
   )
 }
 
