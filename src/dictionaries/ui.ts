@@ -47,6 +47,8 @@ const en = {
     contact: "Contact",
     files: "Files",
     email: "edison@cristovao.codes",
+    linkedin: "LinkedIn",
+    linkedinAria: "LinkedIn profile (opens in a new tab)",
     whatsapp: "WhatsApp",
     whatsappAria: "Message Edison on WhatsApp (opens in a new tab)",
     whatsappText:
@@ -61,6 +63,7 @@ const en = {
     noContent: "// {title}: no content available",
     englishOnly: "// this file is only available in English",
     tryAgain: "Try again",
+    newTab: " (opens in a new tab)",
   },
   status: {
     label: "Status bar",
@@ -69,6 +72,7 @@ const en = {
     position: "Ln {line}, Col {col}",
     opening: "opening {name}…",
     github: "GitHub profile (opens in a new tab)",
+    linkedin: "LinkedIn profile (opens in a new tab)",
     email: "Send an e-mail",
   },
   pane: {
@@ -124,6 +128,8 @@ const pt = {
     contact: "Contato",
     files: "Arquivos",
     email: "edison@cristovao.codes",
+    linkedin: "LinkedIn",
+    linkedinAria: "Perfil no LinkedIn (abre em nova aba)",
     whatsapp: "WhatsApp",
     whatsappAria: "Falar com o Edison no WhatsApp (abre em nova aba)",
     whatsappText:
@@ -138,6 +144,7 @@ const pt = {
     noContent: "// {title}: sem conteúdo disponível",
     englishOnly: "// este arquivo só existe em inglês",
     tryAgain: "Tentar de novo",
+    newTab: " (abre em nova aba)",
   },
   status: {
     label: "Barra de status",
@@ -146,6 +153,7 @@ const pt = {
     position: "Ln {line}, Col {col}",
     opening: "abrindo {name}…",
     github: "Perfil no GitHub (abre em nova aba)",
+    linkedin: "Perfil no LinkedIn (abre em nova aba)",
     email: "Enviar um e-mail",
   },
   pane: {

@@ -4,7 +4,7 @@ import { EDITOR_FILES, type EditorFile } from "@/lib/editor-files";
 import { DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
 
 /** Arquivos com conteúdo em `src/content/` (subconjunto do registro). */
-export type ContentSlug = "bio" | "terminal" | "others";
+export type ContentSlug = "about" | "bio" | "terminal" | "others";
 /** @deprecated alias de `ContentSlug`; o registro geral está em `@/lib/editor-files`. */
 export type FileSlug = ContentSlug;
 
@@ -42,7 +42,7 @@ function define(
     slug,
     path: file.path,
     name: file.name,
-    // Os três arquivos de conteúdo têm `shiki` no registro.
+    // Todos os arquivos de conteúdo têm `shiki` no registro.
     lang: file.shiki ?? "md",
     description,
     content,
@@ -51,6 +51,11 @@ function define(
 
 /** Loaders de conteúdo dos arquivos do editor (só servidor). */
 export const FILES: Record<ContentSlug, CodeFile> = {
+  about: define(
+    "about",
+    "About Edison Cristovão: mobile and full-stack developer with 10+ years of experience, currently at TED and open to remote roles.",
+    { en: load("about.md"), pt: load("about.pt.md") },
+  ),
   bio: define(
     "bio",
     "Edison Cristovão's bio as a code file: background, stack and what he's working on.",

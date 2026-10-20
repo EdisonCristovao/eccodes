@@ -1,16 +1,16 @@
 /**
-   * 👋 Oi, eu sou o Edison Cristovão 🧑‍💻
-   *
-   * Dev full-stack no Brasil (🇧🇷), com
-   * experiência em desenvolvimento web e mobile.
-   * Frontend é a minha nova paixão: tenho trabalhado
-   * em projetos descentralizados, como marketplaces de NFT
-   * e DApps em geral.
-   *
-   * Para os seus projetos, trago mais de 5 anos de experiência
-   * com várias tecnologias, como:
-   * ReactJS, React Native, Next.js, Node.js
-   * e bancos de dados em geral.
-   * Também trago boa comunicação, trabalho em equipe e velocidade,
-   * sem desperdiçar tempo nem dinheiro.
-   */
+ * Edison Cristovão
+ * Desenvolvedor mobile e full stack · Braga, Portugal
+ *
+ * Mais de 10 anos construindo aplicações com React
+ * Native, React, TypeScript e Node.js. Hoje no TED,
+ * desenvolvo apps mobile em React Native num time
+ * remoto e internacional.
+ */
+
+export const languages = {
+  portuguese: "nativo",
+  english: "profissional",
+};
+
+export const openTo = ["mobile", "full stack", "remoto"];

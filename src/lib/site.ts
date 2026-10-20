@@ -14,7 +14,7 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://edison.cristovao.codes";
 export const SITE_NAME = "EC.c";
 export const AUTHOR = "Edison Cristovão";
-export { GITHUB_URL } from "@/lib/navigation";
+export { GITHUB_URL, LINKEDIN_URL } from "@/lib/navigation";
 /** Valores em inglês (idioma padrão); por idioma, usar `pages[lang]`. */
 export const JOB_TITLE = pages.en.jsonld.jobTitle;
 export const DEFAULT_TITLE = pages.en.seo.defaultTitle;
@@ -67,7 +67,7 @@ export function siteMetadata(lang: Locale): Metadata {
       "Edison Cristovão",
       pages[lang].jsonld.jobTitle.toLowerCase(),
       lang === "pt" ? "portfólio" : "portfolio",
-      "Next.js",
+      "React Native",
       "React",
       "TypeScript",
     ],

@@ -7,14 +7,32 @@ import JsonLd from "@/components/JsonLd";
 import { pages } from "@/dictionaries/pages";
 import { EDITOR_FILES } from "@/lib/editor-files";
 import { HTML_LANG, localizedPath } from "@/lib/i18n";
-import { AUTHOR, GITHUB_URL, SITE_URL, localeFromParams } from "@/lib/site";
+import {
+  AUTHOR,
+  GITHUB_URL,
+  LINKEDIN_URL,
+  SITE_URL,
+  localeFromParams,
+} from "@/lib/site";
 
 type HomeProps = {
   params: Promise<{ lang: string }>;
 };
 
-// Não se traduz: é a linha 8 do home.tsx e o knowsAbout do JSON-LD.
-const STACK = ["React", "Next.js", "TypeScript", "Node.js"];
+// Não se traduzem. STACK é a linha 8 do home.tsx; KNOWS_ABOUT, a stack
+// completa do perfil para o JSON-LD.
+const STACK = ["React Native", "React", "TypeScript", "Node.js"];
+const KNOWS_ABOUT = [
+  "React Native",
+  "React",
+  "TypeScript",
+  "JavaScript",
+  "Node.js",
+  "Redux",
+  "Material UI",
+  "PostgreSQL",
+  "Git",
+];
 
 const PHOTO = { src: "/imgs/profile-photo.png", width: 1024, height: 1214 };
 
@@ -32,8 +50,13 @@ export default async function Home({ params }: HomeProps) {
     inLanguage: HTML_LANG[lang],
     jobTitle: jsonld.jobTitle,
     image: `${SITE_URL}${PHOTO.src}`,
-    sameAs: [GITHUB_URL],
-    knowsAbout: STACK,
+    sameAs: [GITHUB_URL, LINKEDIN_URL],
+    knowsAbout: KNOWS_ABOUT,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Braga",
+      addressCountry: "PT",
+    },
   };
 
   // A home é o arquivo home.tsx (item 4): o tamanho da fonte e a coluna de

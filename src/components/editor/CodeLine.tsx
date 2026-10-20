@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 export type CodeLineProps = {
   /** comment: cor de comentário · code: monoespaçado com espaços preservados · prose: texto corrido (max 72ch). */
   kind?: "comment" | "code" | "prose";
-  indent?: 0 | 1 | 2 | 3;
+  indent?: 0 | 1 | 2 | 3 | 4;
   /** Linha atual (número em laranja). */
   current?: boolean;
   /** false: alinhada ao gutter, sem número e sem contar (avisos). */
@@ -20,6 +20,7 @@ const INDENT: Record<NonNullable<CodeLineProps["indent"]>, string> = {
   1: "pl-6",
   2: "pl-12",
   3: "pl-18",
+  4: "pl-24",
 };
 
 // Com wrap o recuo é em ch e pendente: a 1ª linha fica no indent, a
@@ -29,6 +30,7 @@ const WRAP_INDENT: Record<NonNullable<CodeLineProps["indent"]>, string> = {
   1: "pl-[4ch] -indent-[2ch]",
   2: "pl-[6ch] -indent-[2ch]",
   3: "pl-[8ch] -indent-[2ch]",
+  4: "pl-[10ch] -indent-[2ch]",
 };
 
 /**

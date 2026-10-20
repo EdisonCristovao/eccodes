@@ -2,12 +2,14 @@
 
 import { ExternalLink, Mail, MessageCircle } from "lucide-react";
 import { useParams } from "next/navigation";
+import { LinkedinMark } from "@/components/BrandIcons";
 import FileIcon from "@/components/editor/FileIcon";
 import { File } from "@/components/explorer/File";
 import { Section } from "@/components/explorer/Section";
 import { ui, whatsappUrl } from "@/dictionaries/ui";
 import { EDITOR_FILES, EXPLORER_ORDER } from "@/lib/editor-files";
 import { DEFAULT_LOCALE, hasLocale, localizedPath } from "@/lib/i18n";
+import { LINKEDIN_URL } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 export type ExplorerProps = {
@@ -41,6 +43,17 @@ export default function Explorer({ className, inDrawer = false }: ExplorerProps)
           inDrawer={inDrawer}
         >
           {dict.email}
+          <ExternalLink size={12} className="ml-2 inline" aria-hidden="true" />
+        </File>
+        <File
+          href={LINKEDIN_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={dict.linkedinAria}
+          icon={<LinkedinMark size={16} />}
+          inDrawer={inDrawer}
+        >
+          {dict.linkedin}
           <ExternalLink size={12} className="ml-2 inline" aria-hidden="true" />
         </File>
         <File

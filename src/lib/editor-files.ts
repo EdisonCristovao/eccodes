@@ -50,6 +50,7 @@ export const EDITOR_FILES: Record<FileSlug, EditorFile> = {
     name: "about.md",
     ext: "md",
     language: "Markdown",
+    shiki: "md",
     section: "files",
   },
   bio: {
