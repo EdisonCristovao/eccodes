@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/imgs/logo.svg">
+    <source media="(prefers-color-scheme: light)" srcset="public/imgs/logo-light.svg">
+    <img alt="EC.c" src="public/imgs/logo-light.svg" width="176" height="64">
+  </picture>
+</p>
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
